@@ -1,0 +1,2836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INCONIGTO-MODE || Subscription</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://raw.githubusercontent.com/AFRcloud/BG/main/icons8-film-noir-80.png"/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Common CSS styles shared across all pages */
+:root {
+  /* Color variables */
+  --primary: #6a11cb;
+  --primary-dark: #4f46e5;
+  --primary-light: #a0a0ff;
+  --secondary: #2575fc;
+  --secondary-dark: #1e40af;
+  --accent: #ff6b6b;
+  --dark: #0f0c29;
+  --dark-light: #302b63;
+  --light: #ffffff;
+  --gray: #64748b;
+  --gray-light: #a0a0ff;
+  --gray-dark: #334155;
+  --primary-color: #6a11cb;
+  --secondary-color: #2575fc;
+  --accent-color: #ff6b6b;
+  --dark-bg: #0f0c29;
+  --dark-bg-gradient-1: #302b63;
+  --dark-bg-gradient-2: #24243e;
+  --card-bg: rgba(15, 14, 32, 0.8);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0ff;
+  --text-muted: rgba(255, 255, 255, 0.5);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --success-color: #38ef7d;
+
+  /* Common UI elements */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-full: 9999px;
+
+  /* Shadows and effects */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --glow-primary: 0 0 10px rgba(106, 17, 203, 0.5), 0 0 20px rgba(106, 17, 203, 0.2);
+  --glow-secondary: 0 0 15px rgba(37, 117, 252, 0.5);
+
+  /* Animations */
+  --transition-normal: all 0.3s ease;
+  --transition-slow: all 0.5s ease;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Rajdhani", sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--dark-bg), var(--dark-bg-gradient-1), var(--dark-bg-gradient-2));
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 30%, rgba(106, 17, 203, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(37, 117, 252, 0.15) 0%, transparent 40%);
+  z-index: -1;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* Common components */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: var(--border-radius-md);
+  font-weight: 600;
+  transition: var(--transition-normal);
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  background: rgba(106, 17, 203, 0.1);
+  border: 1px solid rgba(106, 17, 203, 0.2);
+  color: var(--text-secondary);
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-button:hover {
+  background: rgba(106, 17, 203, 0.2);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-primary);
+}
+
+.nav-button.active {
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  box-shadow: var(--glow-primary);
+}
+
+.nav-highlight {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: white !important;
+  box-shadow: 0 3px 10px rgba(106, 17, 203, 0.3);
+}
+
+.nav-highlight:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+}
+
+.nav-highlight::after {
+  display: none;
+}
+
+/* Donation modal */
+.donation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.donation-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.donation-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.donation-content {
+  position: relative;
+  background: linear-gradient(to bottom right, #1e1e3f, #0f0c29);
+  border-radius: var(--border-radius-lg);
+  padding: 1px;
+  max-width: 90%;
+  width: 400px;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.donation-modal.active .donation-content {
+  transform: scale(1);
+}
+
+.donation-border {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.donation-border-animation {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--primary-color));
+  animation: rotate 8s linear infinite;
+  opacity: 0.7;
+}
+
+.donation-body {
+  position: relative;
+  background: var(--dark-bg);
+  border-radius: calc(var(--border-radius-lg) - 1px);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close-donation {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius-full);
+  transition: var(--transition-normal);
+}
+
+.close-donation:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.donation-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.donation-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.donation-small-text {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.qris-container {
+  position: relative;
+  padding: 3px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.qris-border {
+  position: absolute;
+  inset: 0;
+}
+
+.qris-border-animation {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--primary-color));
+  animation: pulse 2s infinite;
+  opacity: 0.7;
+  border-radius: var(--border-radius-md);
+}
+
+.qris-image-container {
+  position: relative;
+  background: white;
+  padding: 10px;
+  border-radius: calc(var(--border-radius-md) - 2px);
+}
+
+.qris-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Animations */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .nav-buttons {
+    gap: 8px;
+  }
+
+  .nav-button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .nav-highlight {
+    margin-top: 10px;
+    display: inline-block;
+  }
+}
+
+@media (max-width: 480px) {
+  .donation-content {
+    width: 90%;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+
+  .nav-buttons {
+    gap: 5px;
+  }
+
+  .nav-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Current year script support */
+#current-year {
+  display: inline;
+}
+
+/* Floating Donation Button */
+.donate-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 5px 20px rgba(106, 17, 203, 0.5);
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s ease;
+  animation: pulse-donate 2s infinite;
+}
+
+@keyframes pulse-donate {
+  0% {
+    box-shadow: 0 0 0 0 rgba(106, 17, 203, 0.7);
+    transform: scale(1);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(106, 17, 203, 0);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(106, 17, 203, 0);
+    transform: scale(1);
+  }
+}
+
+.donate-btn:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .donate-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-buttons {
+    gap: 5px;
+  }
+
+  .nav-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+}
+/* Subscription page specific styles */
+:root {
+  --color-bg: #0f0c29;
+  --color-bg-card: rgba(15, 14, 32, 0.8);
+  --color-primary: #6a11cb;
+  --color-secondary: #2575fc;
+  --color-accent: #ff6b6b;
+  --color-text: #ffffff;
+  --color-text-dim: #a0a0ff;
+  --color-success: #38ef7d;
+  --color-error: #ff2266;
+  --color-input-bg: rgba(106, 17, 203, 0.05);
+  --color-input-border: rgba(106, 17, 203, 0.2);
+  --glow-primary: 0 0 10px rgba(106, 17, 203, 0.5), 0 0 20px rgba(106, 17, 203, 0.2);
+  --glow-secondary: 0 0 10px rgba(37, 117, 252, 0.5), 0 0 20px rgba(37, 117, 252, 0.2);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --card-width: 100%;
+  --card-max-width: 480px;
+  --card-padding: 1.5rem;
+  --card-border-radius: 12px;
+}
+
+body {
+  font-family: "Rajdhani", sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+  padding: 1rem 0;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle at 20% 30%, rgba(106, 17, 203, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(37, 117, 252, 0.15) 0%, transparent 40%);
+  z-index: -1;
+}
+
+.container {
+  width: var(--card-width);
+  max-width: var(--card-max-width);
+  padding: 0 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(106, 17, 203, 0.1);
+  width: 100%;
+}
+
+.card::before,
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+}
+
+.card::after,
+.footer::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(106, 17, 203, 0.5), rgba(37, 117, 252, 0.5), rgba(255, 107, 107, 0.5));
+  filter: blur(1px);
+}
+
+.title-container {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.title {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+  margin: 0;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
+}
+
+.title::after {
+  content: "SUB";
+  position: absolute;
+  top: -8px;
+  right: -30px;
+  font-size: 0.7rem;
+  font-weight: 400;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  -webkit-text-fill-color: var(--color-bg);
+  transform: rotate(15deg);
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+  margin-top: 0.3rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  letter-spacing: 0.5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: "Rajdhani", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--glow-primary);
+}
+
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236a11cb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1rem;
+  padding-right: 2.2rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  box-shadow: var(--glow-primary);
+  transform: translateY(-2px);
+}
+
+.loading {
+  display: none;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: var(--color-primary);
+}
+
+.spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(106, 17, 203, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--color-primary);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  margin-top: 0.8rem;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.result {
+  display: none;
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.result-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.1rem;
+  color: var(--color-success);
+}
+
+.output-container {
+  position: relative;
+  margin-bottom: 0.8rem;
+}
+
+.output {
+  width: 100%;
+  height: 180px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-input-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  padding: 0.8rem;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.output:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.copy-btn {
+  background: linear-gradient(90deg, var(--color-success), var(--color-primary));
+  color: var(--color-bg);
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.copy-btn:hover {
+  box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+  transform: translateY(-2px);
+}
+
+.copy-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.error-message {
+  color: var(--color-error);
+  text-align: center;
+  margin-top: 0.8rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  :root {
+    --card-padding: 1.2rem;
+  }
+
+  .container {
+    padding: 0 0.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-control {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    padding: 0.7rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Cyberpunk details */
+.tech-detail {
+  position: absolute;
+  background: var(--color-primary);
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.tech-detail-1 {
+  width: 40px;
+  height: 40px;
+  top: 20px;
+  right: 20px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px var(--color-primary);
+}
+
+.tech-detail-2 {
+  width: 80px;
+  height: 2px;
+  bottom: 40px;
+  left: -20px;
+  transform: rotate(45deg);
+}
+
+.tech-detail-3 {
+  width: 15px;
+  height: 15px;
+  bottom: 20px;
+  right: 40px;
+  transform: rotate(45deg);
+}
+
+/* Animated typing effect for loading */
+.typing {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--color-primary);
+  width: 0;
+  animation: typing 3s steps(30, end) infinite;
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  80% {
+    width: 100%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.form-group.uuid-group {
+  position: relative;
+}
+
+.uuid-generate {
+  position: absolute;
+  right: 8px;
+  top: 36px;
+  background: rgba(106, 17, 203, 0.1);
+  border: none;
+  color: var(--color-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: var(--transition);
+}
+
+.uuid-generate:hover {
+  background: rgba(106, 17, 203, 0.2);
+}
+
+.form-row {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.info-badge {
+  display: inline-block;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-size: 0.65rem;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: 5px;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.custom-bug-container {
+  display: none;
+}
+
+/* Footer styles */
+.footer {
+  width: var(--card-width);
+  max-width: var(--card-max-width);
+  background: var(--color-bg-card);
+  border-radius: var(--card-border-radius);
+  padding: 1.2rem;
+  position: relative;
+  border: 1px solid rgba(106, 17, 203, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  margin: 0 0.75rem;
+}
+
+.footer-logo {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-powered {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  margin-bottom: 0.6rem;
+  font-family: "Share Tech Mono", monospace;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  background: rgba(106, 17, 203, 0.05);
+  border: 1px solid rgba(106, 17, 203, 0.1);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.social-link:hover {
+  background: rgba(106, 17, 203, 0.1);
+  box-shadow: var(--glow-primary);
+  transform: translateY(-2px);
+}
+
+.social-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.footer-year {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  margin-top: 0.4rem;
+  letter-spacing: 1px;
+}
+
+.circuit-line {
+  position: absolute;
+  background: var(--color-primary);
+  opacity: 0.1;
+}
+
+.circuit-line-1 {
+  width: 60px;
+  height: 1px;
+  top: 20px;
+  left: 20px;
+}
+
+.circuit-line-2 {
+  width: 1px;
+  height: 30px;
+  top: 20px;
+  left: 20px;
+}
+
+.circuit-line-3 {
+  width: 40px;
+  height: 1px;
+  bottom: 25px;
+  right: 30px;
+}
+
+.circuit-line-4 {
+  width: 1px;
+  height: 25px;
+  bottom: 25px;
+  right: 30px;
+}
+
+.circuit-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  opacity: 0.2;
+}
+
+.circuit-dot-1 {
+  top: 20px;
+  left: 20px;
+}
+
+.circuit-dot-2 {
+  top: 50px;
+  left: 20px;
+}
+
+.circuit-dot-3 {
+  bottom: 25px;
+  right: 30px;
+}
+
+.circuit-dot-4 {
+  bottom: 50px;
+  right: 30px;
+}
+
+/* Validation status styles */
+.validation-status {
+  display: none;
+  margin-top: 1rem;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+}
+
+.validation-progress {
+  margin-top: 0.5rem;
+  height: 6px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.validation-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  transition: width 0.3s ease;
+}
+
+.validation-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.validation-check {
+  margin-right: 0.5rem;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+}
+
+.form-group.validation-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.form-check-input {
+  margin-right: 0.5rem;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-primary);
+}
+
+.form-check-label {
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.select-info {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="tech-detail tech-detail-1"></div>
+            <div class="tech-detail tech-detail-2"></div>
+            <div class="tech-detail tech-detail-3"></div>
+            
+            <div class="title-container">
+                <h1 class="title">INCONIGTO - MODE</h1>
+                <p class="subtitle">Advanced Subscription Link Generator</p>
+            </div>
+
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-button">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a href="sub.html" class="nav-button active">
+                    <i class="fas fa-rss"></i> Subscription
+                </a>
+                <a href="link.html" class="nav-button">
+                    <i class="fas fa-link"></i> Link Generator
+                </a>
+                <a href="converter.html" class="nav-button">
+                    <i class="fas fa-exchange-alt"></i> Converter
+                </a>
+            </div>
+            
+            <form id="subLinkForm">
+                <div class="form-group">
+                    <label for="configType">PROTOCOL TYPE</label>
+                    <select id="configType" class="form-control" required>
+                        <option value="vless">VLESS</option>
+                        <option value="vmess">VMESS</option>
+                        <option value="trojan">TROJAN</option>
+                        <option value="shadowsocks">SHADOWSOCKS</option>
+                        <option value="mix">MIX (ALL PROTOCOLS)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="formatType">FORMAT TYPE</label>
+                    <select id="formatType" class="form-control" required>
+                        <option value="v2ray">Link V2RAY</option>
+                        <option value="nekobox">Config NEKOBOX</option>
+                        <option value="clash">Proxy_Provider CLASH</option>
+                    </select>
+                </div>
+                
+                <div class="form-group uuid-group">
+                    <label for="uuid">UUID</label>
+                    <input type="text" id="uuid" class="form-control" value="bbbbbbbb-cccc-4ddd-eeee-ffffffffffff" required>
+                    <button type="button" id="generateUuid" class="uuid-generate">GENERATE</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bugType">BUG TYPE</label>
+                    <select id="bugType" class="form-control" required>
+                        <option value="default">DIRECT</option>
+                        <option value="non-wildcard">WEBSOCKET</option>
+                        <option value="wildcard">WILDCARD WEBSOCKET</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mainDomain">MAIN DOMAIN <span class="info-badge">SELECT</span></label>
+                    <select id="mainDomain" class="form-control" required>
+                        <!-- Will be populated from MainDomains array -->
+                    </select>
+                </div>
+                
+                <div id="customBugContainer" class="form-group custom-bug-container">
+                    <label for="customBug">CUSTOM BUG</label>
+                    <input type="text" id="customBug" class="form-control" placeholder="Example : BUG-WLG.COM, BUG-VIU.COM, BUG-ZOOM.COM">
+                    <div class="select-info">Pisah Dengan Koma Jika Ingin Banyak BUG sekaligus</div>
+                    <div class="select-info">Supported Wildcard : ava.game.naver.com, quiz.int.vidio.com, graph.instagram.com, zaintest.vuclip.com, support.zoom.us, cache.netflix.com</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tls">TLS ENCRYPTION</label>
+                    <select id="tls" class="form-control">
+                        <option value="true">ENABLED</option>
+                        <option value="false">DISABLED</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="country">REGION FILTER</label>
+                        <select id="country" class="form-control">
+                            <option value="">Loading regions...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="limit">QUANTITY</label>
+                        <input type="number" id="limit" class="form-control" min="1" max="50" value="5" placeholder="Max 50" required>
+                    </div>
+                </div>
+                
+                <div class="form-group validation-group">
+                    <label class="form-check">
+                        <input type="checkbox" id="validateProxies" class="form-check-input" checked>
+                        <span class="form-check-label">Filter ProxyIP ACTIVE Untuk Subscription?</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn">Generate Configuration</button>
+            </form>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <div class="loading-text typing">Fetching proxy data and generating configs...</div>
+            </div>
+            
+            <div id="validation-status" class="validation-status">
+                <div>Validating proxies... <span id="validation-count">0/0</span></div>
+                <div class="validation-progress">
+                    <div id="validation-bar" class="validation-bar"></div>
+                </div>
+                <div class="validation-stats">
+                    <div>Valid: <span id="valid-count">0</span></div>
+                    <div>Invalid: <span id="invalid-count">0</span></div>
+                </div>
+            </div>
+            
+            <div id="error-message" class="error-message"></div>
+            
+            <div id="result" class="result">
+                <div class="result-header">
+                    <div class="result-title">CONFIGURATION GENERATED</div>
+                </div>
+                <div class="output-container">
+                    <textarea id="output" class="output" readonly></textarea>
+                </div>
+                <button id="copyLink" class="copy-btn">
+                    <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    COPY CONFIGURATION
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="circuit-line circuit-line-1"></div>
+        <div class="circuit-line circuit-line-2"></div>
+        <div class="circuit-line circuit-line-3"></div>
+        <div class="circuit-line circuit-line-4"></div>
+        <div class="circuit-dot circuit-dot-1"></div>
+        <div class="circuit-dot circuit-dot-2"></div>
+        <div class="circuit-dot circuit-dot-3"></div>
+        <div class="circuit-dot circuit-dot-4"></div>
+        
+        <div class="footer-logo">INCONIGTO-MODE</div>
+        <div class="footer-powered">POWERED BY SECURE TECHNOLOGY</div>
+        <div class="footer-social">
+            <a href="https://t.me/Noir7R" class="social-link" target="_blank">
+                <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.846 1.467 1.618 2.796 2.503 4.532.545 1.062 1.587 2.739 3.19 2.756 1.26.033 2.052-.6 3.542-1.95a142.91 142.91 0 0 1 2.43-2.053c1.686-.142 3.382-.284 5.12-.436.887-.075 1.92-.262 2.405-1.226.436-.877-.015-1.35-.48-1.874l-3.881-4.369-5.481-6.174S22.185 2.128 21.198 2.433z"></path>
+                    <path d="M18.167 7.068c.237 1.632-1.162 6.872-1.766 8.849"></path>
+                </svg>
+                @Noir7R
+            </a>
+        </div>    
+        <div class="footer-social">
+            <a href="https://t.me/inconigto_Mode" class="social-link" target="_blank">
+                <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.846 1.467 1.618 2.796 2.503 4.532.545 1.062 1.587 2.739 3.19 2.756 1.26.033 2.052-.6 3.542-1.95a142.91 142.91 0 0 1 2.43-2.053c1.686-.142 3.382-.284 5.12-.436.887-.075 1.92-.262 2.405-1.226.436-.877-.015-1.35-.48-1.874l-3.881-4.369-5.481-6.174S22.185 2.128 21.198 2.433z"></path>
+                    <path d="M18.167 7.068c.237 1.632-1.162 6.872-1.766 8.849"></path>
+                </svg>
+                @inconigto_Mode
+            </a>
+            <a href="https://t.me/InconigtoMode" class="social-link" target="_blank">
+                <svg class="social-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.846 1.467 1.618 2.796 2.503 4.532.545 1.062 1.587 2.739 3.19 2.756 1.26.033 2.052-.6 3.542-1.95a142.91 142.91 0 0 1 2.43-2.053c1.686-.142 3.382-.284 5.12-.436.887-.075 1.92-.262 2.405-1.226.436-.877-.015-1.35-.48-1.874l-3.881-4.369-5.481-6.174S22.185 2.128 21.198 2.433z"></path>
+                    <path d="M18.167 7.068c.237 1.632-1.162 6.872-1.766 8.849"></path>
+                </svg>
+                @InconigtoMode
+            </a>
+        </div>
+        <div class="footer-year">© <span id="current-year"></span></div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        /**
+ * Common JavaScript functions shared across all pages
+ */
+
+// Set current year in footer
+document.addEventListener("DOMContentLoaded", () => {
+  const currentYearElements = document.querySelectorAll("#current-year")
+  const currentYear = new Date().getFullYear()
+
+  currentYearElements.forEach((element) => {
+    element.textContent = currentYear
+  })
+})
+
+// Donation modal functionality
+document.addEventListener("DOMContentLoaded", () => {
+  const donationButton = document.getElementById("donation-button")
+  const donationModal = document.getElementById("donation-modal")
+  const closeButton = document.getElementById("close-donation")
+  const donationBackdrop = document.getElementById("donation-backdrop")
+
+  if (donationButton && donationModal) {
+    // Open donation modal
+    donationButton.addEventListener("click", () => {
+      donationModal.classList.add("active")
+    })
+
+    // Close donation modal
+    if (closeButton) {
+      closeButton.addEventListener("click", () => {
+        donationModal.classList.remove("active")
+      })
+    }
+
+    // Close modal when clicking on backdrop
+    if (donationBackdrop) {
+      donationBackdrop.addEventListener("click", () => {
+        donationModal.classList.remove("active")
+      })
+    }
+
+    // Close modal with Escape key
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && donationModal.classList.contains("active")) {
+        donationModal.classList.remove("active")
+      }
+    })
+  }
+})
+
+/**
+ * Generate a UUID v4
+ * @returns {string} A random UUID v4
+ */
+function generateUUIDv4() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0
+    const v = c === "x" ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
+
+/**
+ * Safe base64 encoding function
+ * @param {string|object} str - String or object to encode
+ * @returns {string} Base64 encoded string
+ */
+function safeBase64Encode(str) {
+  try {
+    // Make sure we're working with a string
+    const stringToEncode = typeof str === "object" ? JSON.stringify(str) : String(str)
+    return window.btoa(stringToEncode)
+  } catch (e) {
+    console.error("Base64 encoding error:", e)
+    return ""
+  }
+}
+
+/**
+ * Format a date to a readable string
+ * @param {Date} date - Date object
+ * @returns {string} Formatted date string
+ */
+function formatDate(date) {
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }
+  return date.toLocaleDateString("en-US", options)
+}
+
+/**
+ * Copy text to clipboard
+ * @param {string} text - Text to copy
+ * @returns {Promise<boolean>} Success status
+ */
+async function copyToClipboard(text) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text)
+      return true
+    } else {
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea")
+      textArea.value = text
+      textArea.style.position = "fixed"
+      textArea.style.left = "-999999px"
+      textArea.style.top = "-999999px"
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+      const success = document.execCommand("copy")
+      document.body.removeChild(textArea)
+      return success
+    }
+  } catch (err) {
+    console.error("Failed to copy text: ", err)
+    return false
+  }
+}
+
+/**
+ * Show a toast notification
+ * @param {string} message - Message to display
+ * @param {string} type - Type of toast (success, error, info)
+ * @param {number} duration - Duration in milliseconds
+ */
+function showToast(message, type = "info", duration = 3000) {
+  // Check if toast container exists, create if not
+  let toastContainer = document.getElementById("toast-container")
+
+  if (!toastContainer) {
+    toastContainer = document.createElement("div")
+    toastContainer.id = "toast-container"
+    toastContainer.style.position = "fixed"
+    toastContainer.style.bottom = "20px"
+    toastContainer.style.right = "20px"
+    toastContainer.style.zIndex = "9999"
+    document.body.appendChild(toastContainer)
+  }
+
+  // Create toast element
+  const toast = document.createElement("div")
+  toast.className = `toast toast-${type}`
+  toast.style.minWidth = "250px"
+  toast.style.margin = "10px 0"
+  toast.style.padding = "15px"
+  toast.style.borderRadius = "8px"
+  toast.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.15)"
+  toast.style.display = "flex"
+  toast.style.alignItems = "center"
+  toast.style.justifyContent = "space-between"
+  toast.style.animation = "fadeIn 0.3s, fadeOut 0.3s " + (duration / 1000 - 0.3) + "s forwards"
+
+  // Set background color based on type
+  switch (type) {
+    case "success":
+      toast.style.backgroundColor = "rgba(16, 185, 129, 0.9)"
+      break
+    case "error":
+      toast.style.backgroundColor = "rgba(239, 68, 68, 0.9)"
+      break
+    default:
+      toast.style.backgroundColor = "rgba(99, 102, 241, 0.9)"
+  }
+
+  // Add icon based on type
+  let icon = ""
+  switch (type) {
+    case "success":
+      icon = '<i class="fas fa-check-circle"></i>'
+      break
+    case "error":
+      icon = '<i class="fas fa-exclamation-circle"></i>'
+      break
+    default:
+      icon = '<i class="fas fa-info-circle"></i>'
+  }
+
+  // Set toast content
+  toast.innerHTML = `
+        <div style="display: flex; align-items: center;">
+            <span style="margin-right: 10px; font-size: 18px;">${icon}</span>
+            <span style="color: white;">${message}</span>
+        </div>
+        <button style="background: none; border: none; color: white; cursor: pointer; font-size: 16px;">
+            <i class="fas fa-times"></i>
+        </button>
+    `
+
+  // Add close button functionality
+  const closeButton = toast.querySelector("button")
+  closeButton.addEventListener("click", () => {
+    toastContainer.removeChild(toast)
+  })
+
+  // Add toast to container
+  toastContainer.appendChild(toast)
+
+  // Add CSS for animations if not already added
+  if (!document.getElementById("toast-styles")) {
+    const style = document.createElement("style")
+    style.id = "toast-styles"
+    style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-20px); }
+            }
+        `
+    document.head.appendChild(style)
+  }
+
+  // Remove toast after duration
+  setTimeout(() => {
+    if (toastContainer.contains(toast)) {
+      toastContainer.removeChild(toast)
+    }
+  }, duration)
+}
+
+/**
+ * Generate UUID for form fields
+ * @param {string} elementId - ID of the element to update
+ */
+function generateUUID(elementId) {
+  document.getElementById(elementId).value = generateUUIDv4()
+}
+
+/**
+ * Generate password (same as UUID for consistency)
+ * @param {string} elementId - ID of the element to update
+ */
+function generatePassword(elementId) {
+  document.getElementById(elementId).value = generateUUIDv4()
+}
+
+/**
+ * JavaScript for the subscription page
+ */
+
+// Configuration
+const CONFIG = {
+  proxyListUrl: "https://raw.githubusercontent.com/InconigtoMode/proxylist/refs/heads/main/all.txt",
+  apiCheckUrl: "https://apicek.t-me-inconigto.workers.dev/proxy",
+  mainDomains: ["afrcloud.xyz", "afrcloud.site", "afrcloud.web.id", "afrcloud.my.id"],
+  defaultUuid: "bbbbbbbb-cccc-4ddd-eeee-ffffffffffff",
+  maxProxies: 50,
+  defaultProxyCount: 5,
+  pathTemplate: "/Inconigto-Mode/{ip}-{port}",
+}
+
+// Global variables
+let proxyList = []
+let filteredProxyList = []
+let validatedProxies = []
+let validationInProgress = false
+let totalValidated = 0
+let validCount = 0
+let invalidCount = 0
+
+// DOM Elements
+const form = document.getElementById("subLinkForm")
+const configTypeSelect = document.getElementById("configType")
+const formatTypeSelect = document.getElementById("formatType")
+const uuidInput = document.getElementById("uuid")
+const generateUuidBtn = document.getElementById("generateUuid")
+const bugTypeSelect = document.getElementById("bugType")
+const mainDomainSelect = document.getElementById("mainDomain")
+const customBugContainer = document.getElementById("customBugContainer")
+const customBugInput = document.getElementById("customBug")
+const tlsSelect = document.getElementById("tls")
+const countrySelect = document.getElementById("country")
+const limitInput = document.getElementById("limit")
+const validateProxiesCheckbox = document.getElementById("validateProxies")
+const loadingElement = document.getElementById("loading")
+const validationStatusElement = document.getElementById("validation-status")
+const validationCountElement = document.getElementById("validation-count")
+const validationBarElement = document.getElementById("validation-bar")
+const validCountElement = document.getElementById("valid-count")
+const invalidCountElement = document.getElementById("invalid-count")
+const errorMessageElement = document.getElementById("error-message")
+const resultElement = document.getElementById("result")
+const outputElement = document.getElementById("output")
+const copyLinkBtn = document.getElementById("copyLink")
+
+// Utility functions (UUID, copy to clipboard, base64 encode)
+function generateUUIDv4() {
+  return crypto.randomUUID()
+}
+
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch (err) {
+    console.error("Failed to copy: ", err)
+    return false
+  }
+}
+
+function safeBase64Encode(str) {
+  try {
+    return btoa(unescape(encodeURIComponent(str)))
+  } catch (e) {
+    console.error("Error encoding base64:", e)
+    return ""
+  }
+}
+
+// Initialize the page
+document.addEventListener("DOMContentLoaded", () => {
+  // Populate main domains dropdown
+  populateMainDomains()
+
+  // Set up event listeners
+  setupEventListeners()
+
+  // Load proxy list
+  loadProxyList()
+})
+
+// Populate main domains dropdown
+function populateMainDomains() {
+  CONFIG.mainDomains.forEach((domain) => {
+    const option = document.createElement("option")
+    option.value = domain
+    option.textContent = domain
+    mainDomainSelect.appendChild(option)
+  })
+}
+
+// Set up event listeners
+function setupEventListeners() {
+  // Generate UUID button
+  generateUuidBtn.addEventListener("click", () => {
+    uuidInput.value = generateUUIDv4()
+  })
+
+  // Bug type change
+  bugTypeSelect.addEventListener("change", () => {
+    if (bugTypeSelect.value === "non-wildcard" || bugTypeSelect.value === "wildcard") {
+      customBugContainer.style.display = "block"
+    } else {
+      customBugContainer.style.display = "none"
+    }
+  })
+
+  // Form submission
+  form.addEventListener("submit", handleFormSubmit)
+
+  // Copy link button
+  copyLinkBtn.addEventListener("click", () => {
+    copyToClipboard(outputElement.value).then((success) => {
+      if (success) {
+        copyLinkBtn.innerHTML = `
+            <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            COPIED SUCCESSFULLY
+          `
+        setTimeout(() => {
+          copyLinkBtn.innerHTML = `
+              <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              COPY CONFIGURATION
+            `
+        }, 2000)
+      }
+    })
+  })
+}
+
+// Load proxy list
+function loadProxyList() {
+  showLoading("Fetching proxy list...")
+
+  fetch(CONFIG.proxyListUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch proxy list")
+      }
+      return response.text()
+    })
+    .then((data) => {
+      processProxyData(data)
+      hideLoading()
+    })
+    .catch((error) => {
+      console.error("Error loading proxy list:", error)
+      showError("Failed to load proxy list. Please try again later.")
+      hideLoading()
+    })
+}
+
+// Process proxy data
+function processProxyData(data) {
+  // Split by lines and filter empty lines
+  const lines = data.split(/\r?\n/).filter((line) => line.trim() !== "")
+
+  if (lines.length === 0) {
+    showError("No proxies found in the proxy list.")
+    return
+  }
+
+  // Determine delimiter
+  let delimiter = ","
+  const firstLine = lines[0]
+  if (firstLine.includes("\t")) {
+    delimiter = "\t"
+  } else if (firstLine.includes("|")) {
+    delimiter = "|"
+  } else if (firstLine.includes(";")) {
+    delimiter = ";"
+  }
+
+  // Parse proxy list
+  proxyList = lines
+    .map((line) => {
+      const parts = line.split(delimiter)
+      if (parts.length >= 2) {
+        return {
+          ip: parts[0].trim(),
+          port: parts[1].trim(),
+          country: parts.length >= 3 ? parts[2].trim() : "Unknown",
+          provider: parts.length >= 4 ? parts[3].trim() : "Unknown Provider",
+        }
+      }
+      return null
+    })
+    .filter((proxy) => proxy && proxy.ip && proxy.port)
+
+  // Populate country dropdown
+  populateCountryDropdown()
+}
+
+// Populate country dropdown
+function populateCountryDropdown() {
+  // Get unique countries
+  const countries = [...new Set(proxyList.map((proxy) => proxy.country))]
+  countries.sort()
+
+  // Clear existing options
+  countrySelect.innerHTML = ""
+
+  // Add "All Countries" option
+  const allOption = document.createElement("option")
+  allOption.value = ""
+  allOption.textContent = "All Countries"
+  countrySelect.appendChild(allOption)
+
+  // Add country options
+  countries.forEach((country) => {
+    const option = document.createElement("option")
+    option.value = country
+    option.textContent = country
+    countrySelect.appendChild(option)
+  })
+}
+
+// Handle form submission
+async function handleFormSubmit(e) {
+  e.preventDefault()
+
+  // Reset error message
+  errorMessageElement.textContent = ""
+  errorMessageElement.style.display = "none"
+
+  // Get form values
+  const configType = configTypeSelect.value
+  const formatType = formatTypeSelect.value
+  const uuid = uuidInput.value
+  const bugType = bugTypeSelect.value
+  const mainDomain = mainDomainSelect.value
+  const customBug = customBugInput.value
+  const useTls = tlsSelect.value === "true"
+  const country = countrySelect.value
+  const limit = Number.parseInt(limitInput.value, 10)
+  const validateProxies = validateProxiesCheckbox.checked
+
+  // Validate inputs
+  if (!uuid) {
+    showError("Please enter a UUID.")
+    return
+  }
+
+  if (limit < 1 || limit > CONFIG.maxProxies) {
+    showError(`Proxy count must be between 1 and ${CONFIG.maxProxies}.`)
+    return
+  }
+
+  // Filter proxies by country if selected
+  filteredProxyList = country ? proxyList.filter((proxy) => proxy.country === country) : [...proxyList]
+
+  // Check if we have enough proxies
+  if (filteredProxyList.length === 0) {
+    showError("No proxies found with the selected criteria.")
+    return
+  }
+
+  // Shuffle the list to get random proxies
+  shuffleArray(filteredProxyList)
+
+  // Limit the number of proxies
+  filteredProxyList = filteredProxyList.slice(0, limit)
+
+  // Show loading
+  showLoading("Generating configuration...")
+
+  // Validate proxies if needed
+  if (validateProxies) {
+    await validateProxyList()
+  }
+
+  // Generate configuration
+  const config = generateConfiguration(configType, formatType, uuid, bugType, mainDomain, customBug, useTls)
+
+  // Show result
+  showResult(config)
+}
+
+// Validate proxy list
+async function validateProxyList() {
+  validationInProgress = true
+  validatedProxies = []
+  totalValidated = 0
+  validCount = 0
+  invalidCount = 0
+
+  // Show validation status
+  validationStatusElement.style.display = "block"
+  validationCountElement.textContent = `0/${filteredProxyList.length}`
+  validationBarElement.style.width = "0%"
+  validCountElement.textContent = "0"
+  invalidCountElement.textContent = "0"
+  invalidCountElement.textContent = "0"
+
+  // Create a copy of the filtered list
+  const proxiesToValidate = [...filteredProxyList]
+
+  // Validate proxies in batches to avoid too many simultaneous requests
+  const batchSize = 5
+  const batches = Math.ceil(proxiesToValidate.length / batchSize)
+
+  for (let i = 0; i < batches; i++) {
+    const startIdx = i * batchSize
+    const endIdx = Math.min(startIdx + batchSize, proxiesToValidate.length)
+    const batch = proxiesToValidate.slice(startIdx, endIdx)
+
+    // Validate batch in parallel
+    await Promise.all(
+      batch.map(async (proxy) => {
+        const isValid = await validateProxy(proxy)
+        totalValidated++
+
+        // Update validation status
+        const progress = (totalValidated / proxiesToValidate.length) * 100
+        validationCountElement.textContent = `${totalValidated}/${proxiesToValidate.length}`
+        validationBarElement.style.width = `${progress}%`
+
+        if (isValid) {
+          validCount++
+          validCountElement.textContent = validCount
+          validatedProxies.push(proxy)
+        } else {
+          invalidCount++
+          invalidCountElement.textContent = invalidCount
+        }
+      }),
+    )
+  }
+
+  // Use validated proxies if we have any, otherwise use the original filtered list
+  if (validatedProxies.length > 0) {
+    filteredProxyList = validatedProxies
+  }
+
+  validationInProgress = false
+}
+
+// Validate a single proxy
+async function validateProxy(proxy) {
+  try {
+    const response = await fetch(`${CONFIG.apiCheckUrl}?ip=${proxy.ip}&port=${proxy.port}`)
+    const data = await response.json()
+    return data.proxyip === true
+  } catch (error) {
+    console.error("Error validating proxy:", error)
+    return false
+  }
+}
+
+// Generate configuration
+function generateConfiguration(configType, formatType, uuid, bugType, mainDomain, customBug, useTls) {
+  // Determine which proxies to use
+  const proxiesToUse = filteredProxyList
+
+  // Generate configuration based on format type
+  switch (formatType) {
+    case "v2ray":
+      return generateV2rayLinks(configType, proxiesToUse, uuid, bugType, mainDomain, customBug, useTls)
+    case "clash":
+      return generateClashConfig(configType, proxiesToUse, uuid, bugType, mainDomain, customBug, useTls)
+    case "nekobox":
+      // For Nekobox, we need to first parse the proxies into a format the new function can use
+      const parsedLinks = []
+
+      proxiesToUse.forEach((proxy) => {
+        const path = CONFIG.pathTemplate.replace("{ip}", proxy.ip).replace("{port}", proxy.port)
+        const port = useTls ? 443 : 80
+
+        // Process custom bugs if provided
+        const bugs =
+          customBug && (bugType === "non-wildcard" || bugType === "wildcard")
+            ? customBug.split(",").map((bug) => bug.trim())
+            : [mainDomain]
+
+        bugs.forEach((bug) => {
+          // Determine domain, host, and SNI based on bug type
+          let domain, host, sni
+
+          switch (bugType) {
+            case "default":
+              domain = mainDomain
+              host = mainDomain
+              sni = mainDomain
+              break
+            case "non-wildcard":
+              domain = bug
+              host = mainDomain
+              sni = mainDomain
+              break
+            case "wildcard":
+              domain = bug
+              host = `${bug}.${mainDomain}`
+              sni = `${bug}.${mainDomain}`
+              break
+          }
+
+          const countryCode = proxy.country
+          const isp = proxy.provider
+
+          if (configType === "vmess" || configType === "mix") {
+            parsedLinks.push({
+              type: "vmess",
+              name: `(${countryCode}) ${isp} [VMESS-${useTls ? "TLS" : "NTLS"}]`,
+              server: domain,
+              port: port,
+              uuid: uuid,
+              tls: useTls,
+              sni: sni,
+              wsHost: host,
+              wsPath: path,
+            })
+          }
+
+          if (configType === "vless" || configType === "mix") {
+            parsedLinks.push({
+              type: "vless",
+              name: `(${countryCode}) ${isp} [VLESS-${useTls ? "TLS" : "NTLS"}]`,
+              server: domain,
+              port: port,
+              uuid: uuid,
+              tls: useTls,
+              sni: sni,
+              wsHost: host,
+              wsPath: path,
+            })
+          }
+
+          if (configType === "trojan" || configType === "mix") {
+            parsedLinks.push({
+              type: "trojan",
+              name: `(${countryCode}) ${isp} [TROJAN-${useTls ? "TLS" : "NTLS"}]`,
+              server: domain,
+              port: port,
+              password: uuid,
+              tls: useTls,
+              sni: sni,
+              wsHost: host,
+              wsPath: path,
+            })
+          }
+
+          if (configType === "shadowsocks" || configType === "mix") {
+            parsedLinks.push({
+              type: "ss",
+              name: `(${countryCode}) ${isp} [SS-${useTls ? "TLS" : "NTLS"}]`,
+              server: domain,
+              port: port,
+              password: uuid,
+              tls: useTls,
+              wsHost: host,
+              wsPath: path,
+            })
+          }
+        })
+      })
+
+      return generateNekoboxConfig(parsedLinks)
+    default:
+      return "Unsupported format type"
+  }
+}
+
+// Generate V2Ray links
+function generateV2rayLinks(configType, proxies, uuid, bugType, mainDomain, customBug, useTls) {
+  const links = []
+
+  // Process custom bugs if provided
+  let bugs = []
+  if (customBug && (bugType === "non-wildcard" || bugType === "wildcard")) {
+    bugs = customBug.split(",").map((bug) => bug.trim())
+  }
+
+  // Generate links for each proxy
+  proxies.forEach((proxy) => {
+    const path = CONFIG.pathTemplate.replace("{ip}", proxy.ip).replace("{port}", proxy.port)
+    const port = useTls ? 443 : 80
+    const security = useTls ? "tls" : "none"
+
+    // Generate links based on config type
+    if (configType === "mix" || configType === "vmess") {
+      // Generate VMess links
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+
+          const vmessConfig = {
+            v: "2",
+            ps: `${proxy.country} - ${proxy.provider} [VMess-${useTls ? "TLS" : "NTLS"}]`,
+            add: server,
+            port: port,
+            id: uuid,
+            aid: "0",
+            net: "ws",
+            type: "none",
+            host: host,
+            path: path,
+            tls: security,
+            sni: sni,
+            scy: "zero",
+          }
+
+          links.push(`vmess://${safeBase64Encode(JSON.stringify(vmessConfig))}`)
+        })
+      } else {
+        // Direct connection without bug
+        const vmessConfig = {
+          v: "2",
+          ps: `${proxy.country} - ${proxy.provider} [VMess-${useTls ? "TLS" : "NTLS"}]`,
+          add: mainDomain,
+          port: port,
+          id: uuid,
+          aid: "0",
+          net: "ws",
+          type: "none",
+          host: mainDomain,
+          path: path,
+          tls: security,
+          sni: mainDomain,
+          scy: "zero",
+        }
+
+        links.push(`vmess://${safeBase64Encode(JSON.stringify(vmessConfig))}`)
+      }
+    }
+
+    if (configType === "mix" || configType === "vless") {
+      // Generate VLESS links
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const name = encodeURIComponent(`${proxy.country} - ${proxy.provider} [VLESS-${useTls ? "TLS" : "NTLS"}]`)
+          const encodedPath = encodeURIComponent(path)
+
+          links.push(
+            `vless://${uuid}@${server}:${port}?encryption=none&security=${security}&type=ws&host=${host}&path=${encodedPath}&sni=${sni}#${name}`,
+          )
+        })
+      } else {
+        // Direct connection without bug
+        const name = encodeURIComponent(`${proxy.country} - ${proxy.provider} [VLESS-${useTls ? "TLS" : "NTLS"}]`)
+        const encodedPath = encodeURIComponent(path)
+
+        links.push(
+          `vless://${uuid}@${mainDomain}:${port}?encryption=none&security=${security}&type=ws&host=${mainDomain}&path=${encodedPath}&sni=${mainDomain}#${name}`,
+        )
+      }
+    }
+
+    if (configType === "mix" || configType === "trojan") {
+      // Generate Trojan links
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const name = encodeURIComponent(`${proxy.country} - ${proxy.provider} [Trojan-${useTls ? "TLS" : "NTLS"}]`)
+          const encodedPath = encodeURIComponent(path)
+
+          links.push(
+            `trojan://${uuid}@${server}:${port}?security=${security}&type=ws&host=${host}&path=${encodedPath}&sni=${sni}#${name}`,
+          )
+        })
+      } else {
+        // Direct connection without bug
+        const name = encodeURIComponent(`${proxy.country} - ${proxy.provider} [Trojan-${useTls ? "TLS" : "NTLS"}]`)
+        const encodedPath = encodeURIComponent(path)
+
+        links.push(
+          `trojan://${uuid}@${mainDomain}:${port}?security=${security}&type=ws&host=${mainDomain}&path=${encodedPath}&sni=${mainDomain}#${name}`,
+        )
+      }
+    }
+
+    if (configType === "mix" || configType === "shadowsocks") {
+      // Generate Shadowsocks links
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const name = encodeURIComponent(`${proxy.country} - ${proxy.provider} [SS-${useTls ? "TLS" : "NTLS"}]`)
+          const encodedPath = encodeURIComponent(path)
+          const method = "none"
+          const userInfo = safeBase64Encode(`${method}:${uuid}`)
+
+          links.push(
+            `ss://${userInfo}@${server}:${port}?encryption=none&type=ws&host=${host}&path=${encodedPath}&security=${security}&sni=${sni}#${name}`,
+          )
+        })
+      } else {
+        // Direct connection without bug
+        const name = encodeURIComponent(`${proxy.country} - ${proxy.provider} [SS-${useTls ? "TLS" : "NTLS"}]`)
+        const encodedPath = encodeURIComponent(path)
+        const method = "none"
+        const userInfo = safeBase64Encode(`${method}:${uuid}`)
+
+        links.push(
+          `ss://${userInfo}@${mainDomain}:${port}?encryption=none&type=ws&host=${mainDomain}&path=${encodedPath}&security=${security}&sni=${mainDomain}#${name}`,
+        )
+      }
+    }
+  })
+
+  return links.join("\n")
+}
+
+// Generate Clash configuration
+function generateClashConfig(configType, proxies, uuid, bugType, mainDomain, customBug, useTls) {
+  let config = `# Clash Proxy Provider Configuration
+# Generated by Inconigto-Mode
+# Date: ${new Date().toISOString()}
+# Protocol: ${configType.toUpperCase()}
+# TLS: ${useTls ? "Enabled" : "Disabled"}
+
+proxies:\n`
+
+  // Process custom bugs if provided
+  let bugs = []
+  if (customBug && (bugType === "non-wildcard" || bugType === "wildcard")) {
+    bugs = customBug.split(",").map((bug) => bug.trim())
+  }
+
+  // Generate configuration for each proxy
+  proxies.forEach((proxy) => {
+    const path = CONFIG.pathTemplate.replace("{ip}", proxy.ip).replace("{port}", proxy.port)
+    const port = useTls ? 443 : 80
+    const tls = useTls
+
+    // Generate configuration based on config type
+    if (configType === "mix" || configType === "vmess") {
+      // Generate VMess configuration
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const name = `${proxy.country} - ${proxy.provider} [VMess-${useTls ? "TLS" : "NTLS"}]`
+
+          config += `
+  - name: "${name}"
+    type: vmess
+    server: ${server}
+    port: ${port}
+    uuid: ${uuid}
+    alterId: 0
+    cipher: auto
+    udp: false
+    tls: ${tls}
+    skip-cert-verify: true
+    servername: ${sni}
+    network: ws
+    ws-opts:
+      path: ${path}
+      headers:
+        Host: ${host}
+`
+        })
+      } else {
+        // Direct connection without bug
+        const name = `${proxy.country} - ${proxy.provider} [VMess-${useTls ? "TLS" : "NTLS"}]`
+
+        config += `
+  - name: "${name}"
+    type: vmess
+    server: ${mainDomain}
+    port: ${port}
+    uuid: ${uuid}
+    alterId: 0
+    cipher: auto
+    udp: false
+    tls: ${tls}
+    skip-cert-verify: true
+    servername: ${mainDomain}
+    network: ws
+    ws-opts:
+      path: ${path}
+      headers:
+        Host: ${mainDomain}
+`
+      }
+    }
+
+    if (configType === "mix" || configType === "vless") {
+      // Generate VLESS configuration
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const name = `${proxy.country} - ${proxy.provider} [VLESS-${useTls ? "TLS" : "NTLS"}]`
+
+          config += `
+  - name: "${name}"
+    type: vless
+    server: ${server}
+    port: ${port}
+    uuid: ${uuid}
+    udp: false
+    tls: ${tls}
+    skip-cert-verify: true
+    servername: ${sni}
+    network: ws
+    ws-opts:
+      path: ${path}
+      headers:
+        Host: ${host}
+`
+        })
+      } else {
+        // Direct connection without bug
+        const name = `${proxy.country} - ${proxy.provider} [VLESS-${useTls ? "TLS" : "NTLS"}]`
+
+        config += `
+  - name: "${name}"
+    type: vless
+    server: ${mainDomain}
+    port: ${port}
+    uuid: ${uuid}
+    udp: false
+    tls: ${tls}
+    skip-cert-verify: true
+    servername: ${mainDomain}
+    network: ws
+    ws-opts:
+      path: ${path}
+      headers:
+        Host: ${mainDomain}
+`
+      }
+    }
+
+    if (configType === "mix" || configType === "trojan") {
+      // Generate Trojan configuration
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const name = `${proxy.country} - ${proxy.provider} [Trojan-${useTls ? "TLS" : "NTLS"}]`
+
+          config += `
+  - name: "${name}"
+    type: trojan
+    server: ${server}
+    port: ${port}
+    password: ${uuid}
+    udp: false
+    sni: ${sni}
+    skip-cert-verify: true
+    network: ws
+    ws-opts:
+      path: ${path}
+      headers:
+        Host: ${host}
+`
+        })
+      } else {
+        // Direct connection without bug
+        const name = `${proxy.country} - ${proxy.provider} [Trojan-${useTls ? "TLS" : "NTLS"}]`
+
+        config += `
+  - name: "${name}"
+    type: trojan
+    server: ${mainDomain}
+    port: ${port}
+    password: ${uuid}
+    udp: false
+    sni: ${mainDomain}
+    skip-cert-verify: true
+    network: ws
+    ws-opts:
+      path: ${path}
+      headers:
+        Host: ${mainDomain}
+`
+      }
+    }
+
+    if (configType === "mix" || configType === "shadowsocks") {
+      // Generate Shadowsocks configuration
+      if (bugs.length > 0) {
+        bugs.forEach((bug) => {
+          const server = bug
+          const host = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const sni = bugType === "wildcard" ? `${bug}.${mainDomain}` : mainDomain
+          const name = `${proxy.country} - ${proxy.provider} [SS-${useTls ? "TLS" : "NTLS"}]`
+
+          config += `
+  - name: "${name}"
+    type: ss
+    server: ${server}
+    port: ${port}
+    cipher: none
+    password: ${uuid}
+    udp: false
+    plugin: v2ray-plugin
+    plugin-opts:
+      mode: websocket
+      tls: ${tls}
+      skip-cert-verify: true
+      host: ${host}
+      path: ${path}
+      mux: false
+`
+        })
+      } else {
+        // Direct connection without bug
+        const name = `${proxy.country} - ${proxy.provider} [SS-${useTls ? "TLS" : "NTLS"}]`
+
+        config += `
+  - name: "${name}"
+    type: ss
+    server: ${mainDomain}
+    port: ${port}
+    cipher: none
+    password: ${uuid}
+    udp: false
+    plugin: v2ray-plugin
+    plugin-opts:
+      mode: websocket
+      tls: ${tls}
+      skip-cert-verify: true
+      host: ${mainDomain}
+      path: ${path}
+      mux: false
+`
+      }
+    }
+  })
+
+  const isFullConfig = true
+
+  if (isFullConfig) {
+    config += `
+proxy-groups:
+  - name: "SELECTOR"
+    type: select
+    proxies:
+      - BEST-PING
+      - DIRECT
+      - REJECT
+`
+    // Add all proxy names to the selector group
+    proxies.forEach((proxy) => {
+      config += `      - ${proxy.country} - ${proxy.provider} [${configType.toUpperCase()}-${useTls ? "TLS" : "NTLS"}]\n`
+    })
+
+    config += `
+  - name: "BEST-PING"
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 50
+    proxies:
+`
+    // Add all proxy names to the url-test group
+    proxies.forEach((proxy) => {
+      config += `      - ${proxy.country} - ${proxy.provider} [${configType.toUpperCase()}-${useTls ? "TLS" : "NTLS"}]\n`
+    })
+
+    config += `
+  - name: "STREAMING"
+    type: select
+    proxies:
+      - BEST-PING
+      - DIRECT
+
+  - name: "PORN"
+    type: select
+    proxies:
+      - REJECT
+      - BEST-PING
+      - DIRECT
+
+  - name: "ADS"
+    type: select
+    proxies:
+      - REJECT
+      - BEST-PING
+      - DIRECT
+`
+    // Add all proxy names to the streaming group
+    proxies.forEach((proxy) => {
+      config += `      - ${proxy.country} - ${proxy.provider} [${configType.toUpperCase()}-${useTls ? "TLS" : "NTLS"}]\n`
+    })
+  }
+
+  return config
+}
+
+function generateNekoboxConfig(parsedLinks) {
+  let config = `##INCONIGTO-MODE##
+{
+  "dns": {
+    "final": "dns-final",
+    "independent_cache": true,
+    "rules": [
+      {
+        "disable_cache": false,
+        "domain": [
+          "family.cloudflare-dns.com"
+        ],
+        "server": "direct-dns"
+      }
+    ],
+    "servers": [
+      {
+        "address": "https://family.cloudflare-dns.com/dns-query",
+        "address_resolver": "direct-dns",
+        "strategy": "ipv4_only",
+        "tag": "remote-dns"
+      },
+      {
+        "address": "local",
+        "strategy": "ipv4_only",
+        "tag": "direct-dns"
+      },
+      {
+        "address": "local",
+        "address_resolver": "dns-local",
+        "strategy": "ipv4_only",
+        "tag": "dns-final"
+      },
+      {
+        "address": "local",
+        "tag": "dns-local"
+      },
+      {
+        "address": "rcode://success",
+        "tag": "dns-block"
+      }
+    ]
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "path": "../cache/clash.db",
+      "store_fakeip": true
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "external_ui": "../files/yacd"
+    }
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "listen_port": 6450,
+      "override_address": "8.8.8.8",
+      "override_port": 53,
+      "tag": "dns-in",
+      "type": "direct"
+    },
+    {
+      "domain_strategy": "",
+      "endpoint_independent_nat": true,
+      "inet4_address": [
+        "172.19.0.1/28"
+      ],
+      "mtu": 9000,
+      "sniff": true,
+      "sniff_override_destination": true,
+      "stack": "system",
+      "tag": "tun-in",
+      "type": "tun"
+    },
+    {
+      "domain_strategy": "",
+      "listen": "0.0.0.0",
+      "listen_port": 2080,
+      "sniff": true,
+      "sniff_override_destination": true,
+      "tag": "mixed-in",
+      "type": "mixed"
+    }
+  ],
+  "log": {
+    "level": "info"
+  },
+  "outbounds": [
+    {
+      "outbounds": [
+        "Best Latency"
+      ],
+      "tag": "proxy-out",
+      "type": "selector"
+    },
+    {
+      "outbounds": [
+        "remote-dns",
+        "dns-block"
+      ],
+      "tag": "dns-out",
+      "type": "selector"
+    },
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "reject",
+      "type": "reject"
+    },
+    {
+      "tag": "tun-out",
+      "type": "selector"
+    }
+  ],
+  "profiles": [],
+  "proxies": [
+`
+
+  parsedLinks.forEach((link) => {
+    if (link.type === "vmess") {
+      config += `
+    {
+      "server": "${link.server}",
+      "port": ${link.port},
+      "uuid": "${link.uuid}",
+      "alter_id": 0,
+      "security": "${link.tls ? "tls" : "none"}",
+      "skip_cert_verify": true,
+      "network": "ws",
+      "ws_opts": {
+        "path": "${link.wsPath}",
+        "headers": {
+          "Host": "${link.wsHost}"
+        }
+      },
+      "name": "${link.name}",
+      "type": "vmess"
+    },`
+    } else if (link.type === "vless") {
+      config += `
+    {
+      "server": "${link.server}",
+      "port": ${link.port},
+      "uuid": "${link.uuid}",
+      "security": "${link.tls ? "tls" : "none"}",
+      "skip_cert_verify": true,
+      "network": "ws",
+      "ws_opts": {
+        "path": "${link.wsPath}",
+        "headers": {
+          "Host": "${link.wsHost}"
+        }
+      },
+      "name": "${link.name}",
+      "type": "vless"
+    },`
+    } else if (link.type === "trojan") {
+      config += `
+    {
+      "server": "${link.server}",
+      "port": ${link.port},
+      "password": "${link.password}",
+      "security": "${link.tls ? "tls" : "none"}",
+      "skip_cert_verify": true,
+      "network": "ws",
+      "ws_opts": {
+        "path": "${link.wsPath}",
+        "headers": {
+          "Host": "${link.wsHost}"
+        }
+      },
+      "name": "${link.name}",
+      "type": "trojan"
+    },`
+    } else if (link.type === "ss") {
+      config += `
+    {
+      "server": "${link.server}",
+      "port": ${link.port},
+      "cipher": "none",
+      "password": "${link.password}",
+      "plugin": "v2ray-plugin",
+      "plugin_opts": {
+        "mode": "websocket",
+        "tls": ${link.tls},
+        "skip_cert_verify": true,
+        "host": "${link.wsHost}",
+        "path": "${link.wsPath}",
+        "mux": false
+      },
+      "name": "${link.name}",
+      "type": "shadowsocks"
+    },`
+    }
+  })
+
+  // Remove the trailing comma from the last proxy
+  config = config.slice(0, -1)
+
+  config += `
+  ],
+  "route": {
+    "final": "proxy-out",
+    "rules": [
+      {
+        "outbound": "dns-out",
+        "port": [
+          53
+        ],
+        "type": "direct"
+      },
+      {
+        "outbound": "reject",
+        "protocol": [
+          "bittorrent"
+        ],
+        "type": "direct"
+      },
+      {
+        "domain": [
+          "+.ttvnw.net",
+          "+.twitch.tv"
+        ],
+        "outbound": "direct",
+        "type": "domain"
+      },
+      {
+        "domain": [
+          "ads.google.com",
+          "apis.google.com",
+          "clients1.google.com",
+          "clients2.google.com",
+          "clients3.google.com",
+          "clients4.google.com",
+          "dl.google.com",
+          "play.google.com",
+          "safebrowsing.googleapis.com",
+          "www.googleadservices.com",
+          "www.googletagmanager.com"
+        ],
+        "outbound": "direct",
+        "type": "domain"
+      },
+      {
+        "domain": [
+          "localhost",
+          "localdomain",
+          "*.local",
+          "127.0.0.0/8",
+          "192.168.0.0/16",
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "::1/128",
+          "fe80::/10",
+          "fc00::/7"
+        ],
+        "outbound": "direct",
+        "type": "domain"
+      },
+      {
+        "domain_keyword": [
+          "geolocation",
+          "gstatic",
+          "googleusercontent",
+          "android",
+          "google",
+          "youtube"
+        ],
+        "outbound": "direct",
+        "type": "domain"
+      },
+      {
+        "domain_suffix": [
+          ".cn",
+          ".ads.google.com",
+          ".googleapis.com",
+          ".googleusercontent.com"
+        ],
+        "outbound": "direct",
+        "type": "domain"
+      },
+      {
+        "ip_cidr": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "127.0.0.0/8",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "224.0.0.0/4",
+          "240.0.0.0/4"
+        ],
+        "outbound": "direct",
+        "type": "direct"
+      }
+    ]
+  },
+  "version": "1"
+}
+`
+
+  return config
+}
+
+// Utility function to shuffle an array (Fisher-Yates shuffle)
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+  }
+}
+
+// Show loading message
+function showLoading(message) {
+  loadingElement.textContent = message
+  loadingElement.style.display = "block"
+  resultElement.style.display = "none"
+  errorMessageElement.style.display = "none"
+}
+
+// Hide loading message
+function hideLoading() {
+  loadingElement.style.display = "none"
+}
+
+// Show error message
+function showError(message) {
+  errorMessageElement.textContent = message
+  errorMessageElement.style.display = "block"
+  resultElement.style.display = "none"
+}
+
+// Show result
+function showResult(config) {
+  outputElement.value = config
+  resultElement.style.display = "block"
+  outputElement.style.height = "500px"
+  hideLoading()
+}
+
+    </script>
+</body>
+</html>
