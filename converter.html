@@ -23,8 +23,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        /* Common CSS styles shared across all pages */
+    <!-- Custom CSS -->
+	<style>/* Common CSS styles shared across all pages */
 :root {
   /* Color variables */
   --primary: #6a11cb;
@@ -488,6 +488,7 @@ ol {
     font-size: 0.8rem;
   }
 }
+
 /* Converter page specific styles */
 :root {
   --primary: #6a11cb;
@@ -590,10 +591,10 @@ body::before {
 }
 
 .title::after {
-  content: "CONVERT";
+  content: "Convert";
   position: absolute;
   top: -8px;
-  right: -30px;
+  right: -60px;
   font-size: 0.7rem;
   font-weight: 400;
   background: var(--accent);
@@ -762,6 +763,46 @@ body::before {
   border: none;
 }
 
+.option-group {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.option-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--gray-light);
+}
+
+.option-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.option-btn {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(106, 17, 203, 0.2);
+  color: var(--gray-light);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background: rgba(15, 23, 42, 0.8);
+  color: var(--light);
+}
+
+.option-btn.active {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+}
+
 .config-type-selector {
   display: flex;
   gap: 0.8rem;
@@ -828,6 +869,58 @@ body::before {
 .copy-btn:hover {
   background: rgba(106, 17, 203, 0.2);
   color: var(--light);
+}
+
+.result-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.download-btn {
+  background: rgba(37, 117, 252, 0.1);
+  border: 1px solid rgba(37, 117, 252, 0.2);
+  color: var(--secondary);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.download-btn:hover {
+  background: rgba(37, 117, 252, 0.2);
+  color: var(--light);
+}
+
+/* Toast notification for download success */
+.toast-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(16, 185, 129, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast-notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-notification i {
+  font-size: 1.2rem;
 }
 
 .loading-indicator {
@@ -905,6 +998,16 @@ body::before {
 
   .converter-textarea {
     min-height: 120px;
+  }
+
+  .option-selector {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .option-btn {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
   }
 }
 
@@ -1073,7 +1176,7 @@ body::before {
   right: 30px;
 }
 
-    </style>
+</style>
 </head>
 <body>
     <div class="container">
@@ -1084,20 +1187,20 @@ body::before {
             
             <div class="title-container">
                 <h1 class="title">INCONIGTO - MODE</h1>
-                <p class="subtitle">Format Converter Tool</p>
+                <p class="subtitle">V2Ray ↔ Clash Converter</p>
             </div>
 
             <div class="nav-buttons">
-                <a href="" class="nav-button">
+                <a href="index.html" class="nav-button">
                     <i class="fas fa-home"></i> Home
                 </a>
-                <a href="sub" class="nav-button">
+                <a href="sub.html" class="nav-button">
                     <i class="fas fa-rss"></i> Subscription
                 </a>
-                <a href="link" class="nav-button">
+                <a href="link.html" class="nav-button">
                     <i class="fas fa-link"></i> Link Generator
                 </a>
-                <a href="converter" class="nav-button active">
+                <a href="converter.html" class="nav-button active">
                     <i class="fas fa-exchange-alt"></i> Converter
                 </a>
             </div>
@@ -1123,7 +1226,36 @@ body::before {
                         <label>Output Format</label>
                         <div class="format-selector">
                             <button id="clash-format" class="format-btn active">Clash</button>
-                            <button id="nekobox-format" class="format-btn">Nekobox</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="clash-options" style="margin-top: 1rem;">
+                        <label>Clash Configuration Options</label>
+                        
+                        <div class="option-group">
+                            <label class="option-label">DNS Mode:</label>
+                            <div class="option-selector">
+                                <button id="fake-ip" class="option-btn active">Fake IP</button>
+                                <button id="redir-host" class="option-btn">Redir Host</button>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label class="option-label">Proxy Groups:</label>
+                            <div class="option-selector">
+                                <button id="best-ping" class="option-btn active">Best Ping</button>
+                                <button id="load-balance" class="option-btn">Load Balance</button>
+                                <button id="fallback" class="option-btn">Fallback</button>
+                                <button id="all-groups" class="option-btn">All Groups</button>
+                            </div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <label class="option-label">Rule Sets:</label>
+                            <div class="option-selector">
+                                <button id="ads-block" class="option-btn active">Ads Block</button>
+                                <button id="porn-block" class="option-btn active">Porn Block</button>
+                            </div>
                         </div>
                     </div>
 
@@ -1142,9 +1274,17 @@ body::before {
                     <div class="form-group">
                         <div class="result-header">
                             <label for="config-output">Result</label>
-                            <button id="copy-config" class="copy-btn">
-                                <i class="far fa-copy"></i> Copy
-                            </button>
+                            <div class="result-actions">
+                                <button id="copy-config" class="copy-btn">
+                                    <i class="far fa-copy"></i> Copy
+                                </button>
+                                <button id="save-proxy-provider" class="download-btn">
+                                    <i class="fas fa-download"></i> Save Proxy
+                                </button>
+                                <button id="save-full-config" class="download-btn">
+                                    <i class="fas fa-file-download"></i> Save Full
+                                </button>
+                            </div>
                         </div>
                         <textarea id="config-output" class="converter-textarea result-textarea" readonly placeholder="Converted configuration will appear here..."></textarea>
                     </div>
@@ -1156,7 +1296,6 @@ body::before {
                         <label for="config-type">Config Type</label>
                         <div class="format-selector">
                             <button id="clash-type" class="format-btn active">Clash</button>
-                            <button id="nekobox-type" class="format-btn">Nekobox</button>
                         </div>
                     </div>
 
@@ -1180,9 +1319,14 @@ body::before {
                     <div class="form-group">
                         <div class="result-header">
                             <label for="v2ray-output">Result</label>
-                            <button id="copy-v2ray" class="copy-btn">
-                                <i class="far fa-copy"></i> Copy
-                            </button>
+                            <div class="result-actions">
+                                <button id="copy-v2ray" class="copy-btn">
+                                    <i class="far fa-copy"></i> Copy
+                                </button>
+                                <button id="save-v2ray-links" class="download-btn">
+                                    <i class="fas fa-download"></i> Save Links
+                                </button>
+                            </div>
                         </div>
                         <textarea id="v2ray-output" class="converter-textarea result-textarea" readonly placeholder="Converted V2Ray links will appear here..."></textarea>
                     </div>
@@ -1276,1491 +1420,6 @@ body::before {
 
     <!-- JavaScript -->
     <script>
-        /**
- * JavaScript for the converter page
- */
-
-document.addEventListener("DOMContentLoaded", () => {
-  // DOM Elements
-  const v2rayToConfigBtn = document.getElementById("v2ray-to-config")
-  const configToV2rayBtn = document.getElementById("config-to-v2ray")
-  const v2rayToConfigSection = document.getElementById("v2ray-to-config-section")
-  const configToV2raySection = document.getElementById("config-to-v2ray-section")
-
-  const clashFormatBtn = document.getElementById("clash-format")
-  const nekoboxFormatBtn = document.getElementById("nekobox-format")
-  const clashTypeBtn = document.getElementById("clash-type")
-  const nekoboxTypeBtn = document.getElementById("nekobox-type")
-
-  const v2rayInput = document.getElementById("v2ray-input")
-  const configInput = document.getElementById("config-input")
-  const configOutput = document.getElementById("config-output")
-  const v2rayOutput = document.getElementById("v2ray-output")
-
-  const convertV2rayBtn = document.getElementById("convert-v2ray")
-  const convertConfigBtn = document.getElementById("convert-config")
-
-  const copyConfigBtn = document.getElementById("copy-config")
-  const copyV2rayBtn = document.getElementById("copy-v2ray")
-
-  const loadingIndicator = document.getElementById("loading-indicator")
-  const errorMessage = document.getElementById("error-message")
-
-  // Direction toggle
-  v2rayToConfigBtn.addEventListener("click", () => {
-    v2rayToConfigBtn.classList.add("active")
-    configToV2rayBtn.classList.remove("active")
-    v2rayToConfigSection.classList.remove("hidden")
-    configToV2raySection.classList.add("hidden")
-    hideError()
-  })
-
-  configToV2rayBtn.addEventListener("click", () => {
-    configToV2rayBtn.classList.add("active")
-    v2rayToConfigBtn.classList.remove("active")
-    configToV2raySection.classList.remove("hidden")
-    v2rayToConfigSection.classList.add("hidden")
-    hideError()
-  })
-
-  // Format toggle for V2Ray to Config
-  clashFormatBtn.addEventListener("click", () => {
-    clashFormatBtn.classList.add("active")
-    nekoboxFormatBtn.classList.remove("active")
-    hideError()
-  })
-
-  nekoboxFormatBtn.addEventListener("click", () => {
-    nekoboxFormatBtn.classList.add("active")
-    clashFormatBtn.classList.remove("active")
-    hideError()
-  })
-
-  // Format toggle for Config to V2Ray
-  clashTypeBtn.addEventListener("click", () => {
-    clashTypeBtn.classList.add("active")
-    nekoboxTypeBtn.classList.remove("active")
-    hideError()
-  })
-
-  nekoboxTypeBtn.addEventListener("click", () => {
-    nekoboxTypeBtn.classList.add("active")
-    clashTypeBtn.classList.remove("active")
-    hideError()
-  })
-
-  // Configuration type toggle for V2Ray to Config
-  const minimalConfigBtn = document.getElementById("minimal-config")
-  const fullConfigBtn = document.getElementById("full-config")
-  const minimalConfigReverseBtn = document.getElementById("minimal-config-reverse")
-  const fullConfigReverseBtn = document.getElementById("full-config-reverse")
-
-  minimalConfigBtn.addEventListener("click", () => {
-    minimalConfigBtn.classList.add("active")
-    fullConfigBtn.classList.remove("active")
-    hideError()
-  })
-
-  fullConfigBtn.addEventListener("click", () => {
-    fullConfigBtn.classList.add("active")
-    minimalConfigBtn.classList.remove("active")
-    hideError()
-  })
-
-  // Configuration type toggle for Config to V2Ray
-  minimalConfigReverseBtn.addEventListener("click", () => {
-    minimalConfigReverseBtn.classList.add("active")
-    fullConfigReverseBtn.classList.remove("active")
-    hideError()
-  })
-
-  fullConfigReverseBtn.addEventListener("click", () => {
-    fullConfigReverseBtn.classList.add("active")
-    minimalConfigReverseBtn.classList.remove("active")
-    hideError()
-  })
-
-  // Convert V2Ray to Config
-  convertV2rayBtn.addEventListener("click", () => {
-    const v2rayLinks = v2rayInput.value.trim()
-    if (!v2rayLinks) {
-      showError("Please enter V2Ray links to convert")
-      return
-    }
-
-    const outputFormat = clashFormatBtn.classList.contains("active") ? "clash" : "nekobox"
-
-    showLoading()
-    setTimeout(() => {
-      try {
-        const result = convertV2rayToConfig(v2rayLinks, outputFormat)
-        configOutput.value = result
-        hideLoading()
-      } catch (error) {
-        hideLoading()
-        showError(error.message || "Failed to convert V2Ray links. Please check your input.")
-      }
-    }, 500)
-  })
-
-  // Convert Config to V2Ray
-  convertConfigBtn.addEventListener("click", () => {
-    const configText = configInput.value.trim()
-    if (!configText) {
-      showError("Please enter configuration to convert")
-      return
-    }
-
-    const configType = clashTypeBtn.classList.contains("active") ? "clash" : "nekobox"
-
-    showLoading()
-    setTimeout(() => {
-      try {
-        const result = convertConfigToV2ray(configText, configType)
-        v2rayOutput.value = result
-        hideLoading()
-      } catch (error) {
-        hideLoading()
-        showError(error.message || "Failed to convert configuration. Please check your input.")
-      }
-    }, 500)
-  })
-
-  // Copy buttons
-  copyConfigBtn.addEventListener("click", () => {
-    copyToClipboard(configOutput.value)
-    copyConfigBtn.innerHTML = '<i class="fas fa-check"></i> Copied!'
-    setTimeout(() => {
-      copyConfigBtn.innerHTML = '<i class="far fa-copy"></i> Copy'
-    }, 2000)
-  })
-
-  copyV2rayBtn.addEventListener("click", () => {
-    copyToClipboard(v2rayOutput.value)
-    copyV2rayBtn.innerHTML = '<i class="fas fa-check"></i> Copied!'
-    setTimeout(() => {
-      copyV2rayBtn.innerHTML = '<i class="far fa-copy"></i> Copy'
-    }, 2000)
-  })
-
-  // Helper functions
-  function showLoading() {
-    loadingIndicator.classList.remove("hidden")
-  }
-
-  function hideLoading() {
-    loadingIndicator.classList.add("hidden")
-  }
-
-  function showError(message) {
-    errorMessage.textContent = message
-    errorMessage.classList.remove("hidden")
-  }
-
-  function hideError() {
-    errorMessage.classList.add("hidden")
-  }
-
-  async function copyToClipboard(text) {
-    try {
-      await navigator.clipboard.writeText(text)
-      return true
-    } catch (err) {
-      console.error("Failed to copy: ", err)
-
-      // Fallback method
-      const textarea = document.createElement("textarea")
-      textarea.value = text
-      textarea.style.position = "fixed"
-      textarea.style.opacity = "0"
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand("copy")
-      document.body.removeChild(textarea)
-
-      return true
-    }
-  }
-
-  // Conversion functions
-  function convertV2rayToConfig(v2rayLinks, outputFormat) {
-    // Split input by lines
-    const links = v2rayLinks.split(/\r?\n/).filter((line) => line.trim() !== "")
-
-    if (links.length === 0) {
-      throw new Error("No valid V2Ray links found")
-    }
-
-    // Process each link
-    const parsedLinks = links.map((link) => parseV2rayLink(link))
-
-    // Get configuration type
-    const isFullConfig = fullConfigBtn.classList.contains("active")
-
-    // Generate output based on format
-    if (outputFormat === "clash") {
-      return generateClashConfig(parsedLinks, isFullConfig)
-    } else {
-      return generateNekoboxConfig(parsedLinks, isFullConfig)
-    }
-  }
-
-  function convertConfigToV2ray(configText, configType) {
-    const isFullConfig = fullConfigReverseBtn.classList.contains("active")
-
-    if (configType === "clash") {
-      return parseClashConfig(configText, isFullConfig)
-    } else {
-      return parseNekoboxConfig(configText, isFullConfig)
-    }
-  }
-
-  function parseV2rayLink(link) {
-    try {
-      // Determine protocol
-      if (link.startsWith("vmess://")) {
-        return parseVmessLink(link)
-      } else if (link.startsWith("vless://")) {
-        return parseVlessLink(link)
-      } else if (link.startsWith("trojan://")) {
-        return parseTrojanLink(link)
-      } else if (link.startsWith("ss://")) {
-        return parseShadowsocksLink(link)
-      } else {
-        throw new Error(`Unsupported protocol in link: ${link}`)
-      }
-    } catch (error) {
-      console.error("Error parsing link:", error)
-      throw new Error(`Failed to parse link: ${link}`)
-    }
-  }
-
-  function parseVmessLink(link) {
-    // Remove vmess:// prefix and decode base64
-    const base64Content = link.replace("vmess://", "")
-    let config
-
-    try {
-      const decodedContent = atob(base64Content)
-      config = JSON.parse(decodedContent)
-    } catch (error) {
-      throw new Error("Invalid VMess link format")
-    }
-
-    return {
-      type: "vmess",
-      name: config.ps || "VMess Server",
-      server: config.add,
-      port: Number.parseInt(config.port),
-      uuid: config.id,
-      alterId: Number.parseInt(config.aid || "0"),
-      cipher: config.scy || "auto",
-      tls: config.tls === "tls",
-      network: config.net || "tcp",
-      wsPath: config.path || "",
-      wsHost: config.host || "",
-      sni: config.sni || config.add,
-      skipCertVerify: true,
-    }
-  }
-
-  function parseVlessLink(link) {
-    // Format: vless://uuid@server:port?params#name
-    try {
-      // Remove vless:// prefix
-      const content = link.replace("vless://", "")
-
-      // Split into parts
-      const [userInfo, rest] = content.split("@")
-      const [serverPort, paramsAndName] = rest.split("?")
-      const [server, port] = serverPort.split(":")
-
-      // Parse params and name
-      const params = {}
-      let name = ""
-
-      if (paramsAndName) {
-        const [paramsStr, encodedName] = paramsAndName.split("#")
-        name = encodedName ? decodeURIComponent(encodedName) : "VLESS Server"
-
-        // Parse params
-        paramsStr.split("&").forEach((param) => {
-          const [key, value] = param.split("=")
-          params[key] = value ? decodeURIComponent(value) : ""
-        })
-      }
-
-      return {
-        type: "vless",
-        name: name,
-        server: server,
-        port: Number.parseInt(port),
-        uuid: userInfo,
-        tls: params.security === "tls",
-        network: params.type || "tcp",
-        wsPath: params.path || "",
-        wsHost: params.host || "",
-        sni: params.sni || server,
-        skipCertVerify: true,
-      }
-    } catch (error) {
-      throw new Error("Invalid VLESS link format")
-    }
-  }
-
-  function parseTrojanLink(link) {
-    // Format: trojan://password@server:port?params#name
-    try {
-      // Remove trojan:// prefix
-      const content = link.replace("trojan://", "")
-
-      // Split into parts
-      const [password, rest] = content.split("@")
-      const [serverPort, paramsAndName] = rest.split("?")
-      const [server, port] = serverPort.split(":")
-
-      // Parse params and name
-      const params = {}
-      let name = ""
-
-      if (paramsAndName) {
-        const [paramsStr, encodedName] = paramsAndName.split("#")
-        name = encodedName ? decodeURIComponent(encodedName) : "Trojan Server"
-
-        // Parse params
-        paramsStr.split("&").forEach((param) => {
-          const [key, value] = param.split("=")
-          params[key] = value ? decodeURIComponent(value) : ""
-        })
-      }
-
-      return {
-        type: "trojan",
-        name: name,
-        server: server,
-        port: Number.parseInt(port),
-        password: password,
-        tls: params.security === "tls" || true, // Trojan usually uses TLS
-        network: params.type || "tcp",
-        wsPath: params.path || "",
-        wsHost: params.host || "",
-        sni: params.sni || server,
-        skipCertVerify: true,
-      }
-    } catch (error) {
-      throw new Error("Invalid Trojan link format")
-    }
-  }
-
-  function parseShadowsocksLink(link) {
-    // Format: ss://base64(method:password)@server:port#name
-    try {
-      // Remove ss:// prefix
-      const content = link.replace("ss://", "")
-
-      let userInfo, serverPort, name
-
-      // Check if the link contains @ (SIP002 format)
-      if (content.includes("@")) {
-        const [encodedUserInfo, rest] = content.split("@")
-        const [serverPortStr, encodedName] = rest.split("#")
-
-        // Decode user info (method:password)
-        try {
-          userInfo = atob(encodedUserInfo)
-        } catch (e) {
-          // If decoding fails, it might be URL encoded
-          userInfo = decodeURIComponent(encodedUserInfo)
-        }
-
-        serverPort = serverPortStr
-        name = encodedName ? decodeURIComponent(encodedName) : "SS Server"
-      } else {
-        // Legacy format: base64(method:password@server:port)
-        const [encodedData, encodedName] = content.split("#")
-        const decodedData = atob(encodedData)
-
-        // Split into method:password and server:port
-        const atIndex = decodedData.lastIndexOf("@")
-        userInfo = decodedData.substring(0, atIndex)
-        serverPort = decodedData.substring(atIndex + 1)
-
-        name = encodedName ? decodeURIComponent(encodedName) : "SS Server"
-      }
-
-      // Parse user info
-      const [method, password] = userInfo.split(":")
-
-      // Parse server and port
-      const [server, port] = serverPort.split(":")
-
-      return {
-        type: "ss",
-        name: name,
-        server: server,
-        port: Number.parseInt(port),
-        cipher: method,
-        password: password,
-        udp: true,
-      }
-    } catch (error) {
-      throw new Error("Invalid Shadowsocks link format")
-    }
-  }
-
-  function generateClashConfig(parsedLinks, isFullConfig = false) {
-    let config = `# Clash Configuration
-# Generated by Inconigto-Mode Converter
-# Date: ${new Date().toISOString()}
-
-`
-
-    if (isFullConfig) {
-      config += `port: 7890
-socks-port: 7891
-allow-lan: true
-mode: rule
-log-level: info
-external-controller: 127.0.0.1:9090
-dns:
-  enable: true
-  listen: 0.0.0.0:53
-  enhanced-mode: fake-ip
-  nameserver:
-    - 8.8.8.8
-    - 1.1.1.1
-    - https://dns.cloudflare.com/dns-query
-  fallback:
-    - 1.0.0.1
-    - 8.8.4.4
-    - https://dns.google/dns-query
-
-rule-providers:
-
-  ⛔ ADS:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/malikshi/open_clash/refs/heads/main/rule_provider/rule_basicads.yaml"
-    path: "./rule_provider/rule_basicads.yaml"
-    interval: 86400
-
-  🔞 Porn:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/malikshi/open_clash/refs/heads/main/rule_provider/rule_porn.yaml"
-    path: "./rule_provider/rule_porn.yaml"
-    interval: 86400
-
-`
-    }
-
-    config += `proxies:
-`
-
-    parsedLinks.forEach((link, index) => {
-      config += "\n"
-
-      if (link.type === "vmess") {
-        config += `  - name: "${link.name}"
-    type: vmess
-    server: ${link.server}
-    port: ${link.port}
-    uuid: ${link.uuid}
-    alterId: ${link.alterId}
-    cipher: ${link.cipher}
-    udp: true
-    tls: ${link.tls}
-    skip-cert-verify: ${link.skipCertVerify}
-`
-
-        if (link.network === "ws") {
-          config += `    network: ws
-    ws-opts:
-      path: ${link.wsPath}
-`
-          if (link.wsHost) {
-            config += `      headers:
-        Host: ${link.wsHost}
-`
-          }
-        }
-
-        if (link.tls && link.sni) {
-          config += `    servername: ${link.sni}
-`
-        }
-      } else if (link.type === "vless") {
-        config += `  - name: "${link.name}"
-    type: vless
-    server: ${link.server}
-    port: ${link.port}
-    uuid: ${link.uuid}
-    udp: true
-    tls: ${link.tls}
-    skip-cert-verify: ${link.skipCertVerify}
-`
-
-        if (link.network === "ws") {
-          config += `    network: ws
-    ws-opts:
-      path: ${link.wsPath}
-`
-          if (link.wsHost) {
-            config += `      headers:
-        Host: ${link.wsHost}
-`
-          }
-        }
-
-        if (link.tls && link.sni) {
-          config += `    servername: ${link.sni}
-`
-        }
-      } else if (link.type === "trojan") {
-        config += `  - name: "${link.name}"
-    type: trojan
-    server: ${link.server}
-    port: ${link.port}
-    password: ${link.password}
-    udp: true
-    skip-cert-verify: ${link.skipCertVerify}
-`
-
-        if (link.network === "ws") {
-          config += `    network: ws
-    ws-opts:
-      path: ${link.wsPath}
-`
-          if (link.wsHost) {
-            config += `      headers:
-        Host: ${link.wsHost}
-`
-          }
-        }
-
-        if (link.sni) {
-          config += `    sni: ${link.sni}
-`
-        }
-      } else if (link.type === "ss") {
-        config += `  - name: "${link.name}"
-    type: ss
-    server: ${link.server}
-    port: ${link.port}
-    cipher: ${link.cipher}
-    password: ${link.password}
-    udp: true
-`
-      }
-    })
-
-    if (isFullConfig) {
-      config += `
-proxy-groups:
-  - name: "INTERNET"
-    type: select
-    proxies:
-      - BALANCED
-      - SELECTOR
-      - BEST-PING
-      - DIRECT
-      - REJECT
-
-  - name: "SELECTOR"
-    type: select
-    proxies:
-      - DIRECT
-      - REJECT
-`
-      // Add all proxy names to the selector group
-      parsedLinks.forEach((link) => {
-        config += `      - ${link.name}\n`
-      })
-
-      config += `
-  - name: "BEST-PING"
-    type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-    proxies:
-`
-      // Add all proxy names to the url-test group
-      parsedLinks.forEach((link) => {
-        config += `      - ${link.name}\n`
-      })
-
-config += `
-  - name: "BALANCED"
-    type: load-balance
-    url: http://www.gstatic.com/generate_204
-    interval: 300
-    tolerance: 50
-    proxies:
-`
-      // Add all proxy names to the load-balance group
-      parsedLinks.forEach((link) => {
-        config += `      - ${link.name}\n`
-      })
-      config += `
-
-  - name: "PORN"
-    type: select
-    proxies:
-      - REJECT
-      - SELECTOR
-
-  - name: "ADS"
-    type: select
-    proxies:
-      - REJECT
-      - SELECTOR
-`
-
-      config += `
-
-rules:
-  - RULE-SET,⛔ ADS,ADS
-  - RULE-SET,🔞 Porn,PORN
-  - IP-CIDR,192.168.0.0/16,DIRECT
-  - IP-CIDR,10.0.0.0/8,DIRECT
-  - IP-CIDR,172.16.0.0/12,DIRECT
-  - IP-CIDR,127.0.0.0/8,DIRECT
-  - MATCH,INTERNET
-`
-    }
-
-    return config
-  }
-
-  function generateNekoboxConfig(parsedLinks, isFullConfig = false) {
-    let config = ""
-
-    if (isFullConfig) {
-      config = `{
-  "dns": {
-    "final": "dns-final",
-    "independent_cache": true,
-    "rules": [
-      {
-        "disable_cache": false,
-        "domain": [
-          "family.cloudflare-dns.com"
-        ],
-        "server": "direct-dns"
-      }
-    ],
-    "servers": [
-      {
-        "address": "https://family.cloudflare-dns.com/dns-query",
-        "address_resolver": "direct-dns",
-        "strategy": "ipv4_only",
-        "tag": "remote-dns"
-      },
-      {
-        "address": "local",
-        "strategy": "ipv4_only",
-        "tag": "direct-dns"
-      },
-      {
-        "address": "local",
-        "address_resolver": "dns-local",
-        "strategy": "ipv4_only",
-        "tag": "dns-final"
-      },
-      {
-        "address": "local",
-        "tag": "dns-local"
-      },
-      {
-        "address": "rcode://success",
-        "tag": "dns-block"
-      }
-    ]
-  },
-  "experimental": {
-    "cache_file": {
-      "enabled": true,
-      "path": "../cache/clash.db",
-      "store_fakeip": true
-    },
-    "clash_api": {
-      "external_controller": "127.0.0.1:9090",
-      "external_ui": "../files/yacd"
-    }
-  },
-  "inbounds": [
-    {
-      "listen": "0.0.0.0",
-      "listen_port": 6450,
-      "override_address": "8.8.8.8",
-      "override_port": 53,
-      "tag": "dns-in",
-      "type": "direct"
-    },
-    {
-      "domain_strategy": "",
-      "endpoint_independent_nat": true,
-      "inet4_address": [
-        "172.19.0.1/28"
-      ],
-      "mtu": 9000,
-      "sniff": true,
-      "sniff_override_destination": true,
-      "stack": "system",
-      "tag": "tun-in",
-      "type": "tun"
-    },
-    {
-      "domain_strategy": "",
-      "listen": "0.0.0.0",
-      "listen_port": 2080,
-      "sniff": true,
-      "sniff_override_destination": true,
-      "tag": "mixed-in",
-      "type": "mixed"
-    }
-  ],
-  "log": {
-    "level": "info"
-  },
-  "outbounds": [
-    {
-      "outbounds": [
-        "Best Latency",
-`
-      // Add proxy tags
-      const proxyTags = parsedLinks.map((proxy) => `        "${proxy.name}",`).join("\n")
-      config += proxyTags + "\n"
-      config += `        "direct"
-      ],
-      "tag": "Internet",
-      "type": "selector"
-    },
-    {
-      "interval": "1m0s",
-      "outbounds": [
-`
-      // Add proxy tags again for Best Latency
-      config += proxyTags + "\n"
-      config += `        "direct"
-      ],
-      "tag": "Best Latency",
-      "type": "urltest",
-      "url": "https://detectportal.firefox.com/success.txt"
-    },
-`
-    } else {
-      config = `{
-  "outbounds": [
-`
-    }
-
-    // Add all proxy configurations
-    const proxyConfigs = parsedLinks
-      .map((proxy, index) => {
-        let proxyConfig = ""
-
-        if (proxy.type === "vmess") {
-          proxyConfig = `    {
-      "alter_id": ${proxy.alterId || 0},
-      "packet_encoding": "",
-      "security": "${proxy.cipher || "auto"}",
-      "server": "${proxy.server}",
-      "server_port": ${proxy.port},${
-        proxy.tls
-          ? `
-      "tls": {
-        "enabled": true,
-        "insecure": ${proxy.skipCertVerify ? "true" : "false"},
-        "server_name": "${proxy.sni || ""}",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "randomized"
-        }
-      },`
-          : ""
-      }
-      "transport": {
-        "headers": {
-          "Host": "${proxy.wsHost || ""}"
-        },
-        "path": "${proxy.wsPath || ""}",
-        "type": "ws"
-      },
-      "uuid": "${proxy.uuid}",
-      "type": "vmess",
-      "domain_strategy": "prefer_ipv4",
-      "tag": "${proxy.name}"
-    }`
-        } else if (proxy.type === "vless") {
-          proxyConfig = `    {
-      "domain_strategy": "ipv4_only",
-      "flow": "",
-      "multiplex": {
-        "enabled": false,
-        "max_streams": 32,
-        "protocol": "smux"
-      },
-      "packet_encoding": "xudp",
-      "server": "${proxy.server}",
-      "server_port": ${proxy.port},
-      "tag": "${proxy.name}",${
-        proxy.tls
-          ? `
-      "tls": {
-        "enabled": true,
-        "insecure": ${proxy.skipCertVerify ? "true" : "false"},
-        "server_name": "${proxy.sni || ""}",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "randomized"
-        }
-      },`
-          : ""
-      }
-      "transport": {
-        "early_data_header_name": "Sec-WebSocket-Protocol",
-        "headers": {
-          "Host": "${proxy.wsHost || ""}"
-        },
-        "max_early_data": 0,
-        "path": "${proxy.wsPath || ""}",
-        "type": "ws"
-      },
-      "type": "vless",
-      "uuid": "${proxy.uuid}"
-    }`
-        } else if (proxy.type === "trojan") {
-          proxyConfig = `    {
-      "domain_strategy": "ipv4_only",
-      "multiplex": {
-        "enabled": false,
-        "max_streams": 32,
-        "protocol": "smux"
-      },
-      "password": "${proxy.password}",
-      "server": "${proxy.server}",
-      "server_port": ${proxy.port},
-      "tag": "${proxy.name}",${
-        proxy.tls
-          ? `
-      "tls": {
-        "enabled": true,
-        "insecure": ${proxy.skipCertVerify ? "true" : "false"},
-        "server_name": "${proxy.sni || ""}",
-        "utls": {
-          "enabled": true,
-          "fingerprint": "randomized"
-        }
-      },`
-          : ""
-      }
-      "transport": {
-        "early_data_header_name": "Sec-WebSocket-Protocol",
-        "headers": {
-          "Host": "${proxy.wsHost || ""}"
-        },
-        "max_early_data": 0,
-        "path": "${proxy.wsPath || ""}",
-        "type": "ws"
-      },
-      "type": "trojan"
-    }`
-        } else if (proxy.type === "ss") {
-          proxyConfig = `    {
-      "type": "shadowsocks",
-      "tag": "${proxy.name}",
-      "server": "${proxy.server}",
-      "server_port": ${proxy.port},
-      "method": "${proxy.cipher || "none"}",
-      "password": "${proxy.password}",
-      "plugin": "v2ray-plugin",
-      "plugin_opts": "mux=0;path=${proxy.wsPath || ""};host=${proxy.wsHost || ""};tls=${proxy.tls ? "1" : "0"}"
-    }`
-        }
-
-        return proxyConfig
-      })
-      .join(",\n")
-
-    config += proxyConfigs
-
-    // Add the remaining outbounds
-    if (isFullConfig) {
-      config += `,
-    {
-      "tag": "direct",
-      "type": "direct"
-    },
-    {
-      "tag": "bypass",
-      "type": "direct"
-    },
-    {
-      "tag": "block",
-      "type": "block"
-    },
-    {
-      "tag": "dns-out",
-      "type": "dns"
-    }
-  ],
-  "route": {
-    "auto_detect_interface": true,
-    "rules": [
-      {
-        "outbound": "dns-out",
-        "port": [
-          53
-        ]
-      },
-      {
-        "inbound": [
-          "dns-in"
-        ],
-        "outbound": "dns-out"
-      },
-      {
-        "network": [
-          "udp"
-        ],
-        "outbound": "block",
-        "port": [
-          443
-        ],
-        "port_range": []
-      },
-      {
-        "ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ],
-        "outbound": "block",
-        "source_ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ]
-      }
-    ]
-  }
-}`
-    } else {
-      config += `
-  ]
-}`
-    }
-
-    return config
-  }
-
-  function parseClashConfig(configText, isFullConfig) {
-    try {
-      // Simple YAML parsing for Clash config
-      const lines = configText.split(/\r?\n/)
-      let inProxies = false
-      let currentProxy = null
-      const proxies = []
-
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim()
-
-        if (line === "proxies:") {
-          inProxies = true
-          continue
-        }
-
-        if (!inProxies) continue
-
-        // Check if we're starting a new proxy
-        if (line.startsWith("- name:")) {
-          // Save previous proxy if exists
-          if (currentProxy) {
-            proxies.push(currentProxy)
-          }
-
-          // Start new proxy
-          currentProxy = {
-            name: line.replace("- name:", "").trim().replace(/"/g, ""),
-            type: "",
-            server: "",
-            port: 0,
-          }
-        } else if (currentProxy && line.startsWith("type:")) {
-          currentProxy.type = line.replace("type:", "").trim()
-        } else if (currentProxy && line.startsWith("server:")) {
-          currentProxy.server = line.replace("server:", "").trim()
-        } else if (currentProxy && line.startsWith("port:")) {
-          currentProxy.port = Number.parseInt(line.replace("port:", "").trim())
-        } else if (currentProxy && line.startsWith("uuid:")) {
-          currentProxy.uuid = line.replace("uuid:", "").trim()
-        } else if (currentProxy && line.startsWith("password:")) {
-          currentProxy.password = line.replace("password:", "").trim()
-        } else if (currentProxy && line.startsWith("cipher:")) {
-          currentProxy.cipher = line.replace("cipher:", "").trim()
-        } else if (currentProxy && line.startsWith("alterId:")) {
-          currentProxy.alterId = Number.parseInt(line.replace("alterId:", "").trim())
-        } else if (currentProxy && line.startsWith("tls:")) {
-          currentProxy.tls = line.replace("tls:", "").trim() === "true"
-        } else if (currentProxy && line.startsWith("network:")) {
-          currentProxy.network = line.replace("network:", "").trim()
-        } else if (currentProxy && line.startsWith("servername:")) {
-          currentProxy.sni = line.replace("servername:", "").trim()
-        } else if (currentProxy && line.startsWith("sni:")) {
-          currentProxy.sni = line.replace("sni:", "").trim()
-        } else if (currentProxy && line.startsWith("ws-opts:")) {
-          // Next lines will contain ws options
-          if (i + 1 < lines.length && lines[i + 1].includes("path:")) {
-            currentProxy.wsPath = lines[i + 1].replace("path:", "").trim()
-          }
-          if (
-            i + 2 < lines.length &&
-            lines[i + 2].includes("headers:") &&
-            i + 3 < lines.length &&
-            lines[i + 3].includes("Host:")
-          ) {
-            currentProxy.wsHost = lines[i + 3].replace("Host:", "").trim()
-          }
-        }
-
-        // Check if we're leaving the proxies section
-        if (line.startsWith("proxy-groups:") || line.startsWith("rules:")) {
-          inProxies = false
-          // Save the last proxy
-          if (currentProxy) {
-            proxies.push(currentProxy)
-            currentProxy = null
-          }
-        }
-      }
-
-      // Save the last proxy if we reached the end of the file
-      if (inProxies && currentProxy) {
-        proxies.push(currentProxy)
-      }
-
-      // Convert proxies to V2Ray links
-      return proxiesToV2rayLinks(proxies)
-    } catch (error) {
-      throw new Error("Failed to parse Clash configuration: " + error.message)
-    }
-  }
-
-  function parseNekoboxConfig(configText, isFullConfig) {
-    try {
-      const lines = configText.split(/\r?\n/)
-      let currentProxy = null
-      const proxies = []
-
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim()
-
-        if (line === "[Proxy]") {
-          // Save previous proxy if exists
-          if (currentProxy) {
-            proxies.push(currentProxy)
-          }
-
-          // Start new proxy
-          currentProxy = {
-            name: "",
-            type: "",
-            server: "",
-            port: 0,
-          }
-        } else if (currentProxy && line.startsWith("Tag =")) {
-          currentProxy.name = line.replace("Tag =", "").trim()
-        } else if (currentProxy && line.startsWith("Type =")) {
-          currentProxy.type = line.replace("Type =", "").trim().toLowerCase()
-        } else if (currentProxy && line.startsWith("Server =")) {
-          currentProxy.server = line.replace("Server =", "").trim()
-        } else if (currentProxy && line.startsWith("Port =")) {
-          currentProxy.port = Number.parseInt(line.replace("Port =", "").trim())
-        } else if (currentProxy && line.startsWith("UUID =")) {
-          currentProxy.uuid = line.replace("UUID =", "").trim()
-        } else if (currentProxy && line.startsWith("Password =")) {
-          currentProxy.password = line.replace("Password =", "").trim()
-        } else if (currentProxy && line.startsWith("Method =")) {
-          currentProxy.cipher = line.replace("Method =", "").trim()
-        } else if (currentProxy && line.startsWith("AlterID =")) {
-          currentProxy.alterId = Number.parseInt(line.replace("AlterID =", "").trim())
-        } else if (currentProxy && line.startsWith("Security =")) {
-          currentProxy.cipher = line.replace("Security =", "").trim()
-        } else if (currentProxy && line.startsWith("TLS =")) {
-          currentProxy.tls = line.replace("TLS =", "").trim() === "true"
-        } else if (currentProxy && line.startsWith("Transport =")) {
-          currentProxy.network = line.replace("Transport =", "").trim()
-        } else if (currentProxy && line.startsWith("SNI =")) {
-          currentProxy.sni = line.replace("SNI =", "").trim()
-        } else if (currentProxy && line.startsWith("Path =")) {
-          currentProxy.wsPath = line.replace("Path =", "").trim()
-        } else if (currentProxy && line.startsWith("Host =")) {
-          currentProxy.wsHost = line.replace("Host =", "").trim()
-        } else if (currentProxy && line.startsWith("Description =")) {
-          // Override name with description if available
-          currentProxy.name = line.replace("Description =", "").trim()
-        }
-
-        // Empty line indicates end of proxy section
-        if (line === "" && currentProxy && currentProxy.type) {
-          proxies.push(currentProxy)
-          currentProxy = null
-        }
-      }
-
-      // Save the last proxy if we reached the end of the file
-      if (currentProxy && currentProxy.type) {
-        proxies.push(currentProxy)
-      }
-
-      // Convert proxies to V2Ray links
-      return proxiesToV2rayLinks(proxies)
-    } catch (error) {
-      throw new Error("Failed to parse Nekobox configuration: " + error.message)
-    }
-  }
-
-  function proxiesToV2rayLinks(proxies) {
-    if (!proxies || proxies.length === 0) {
-      throw new Error("No valid proxies found in the configuration")
-    }
-
-    return proxies
-      .map((proxy) => {
-        if (proxy.type === "vmess") {
-          return generateVmessLink(proxy)
-        } else if (proxy.type === "vless") {
-          return generateVlessLink(proxy)
-        } else if (proxy.type === "trojan") {
-          return generateTrojanLink(proxy)
-        } else if (proxy.type === "ss" || proxy.type === "shadowsocks") {
-          return generateShadowsocksLink(proxy)
-        } else {
-          return `# Unsupported proxy type: ${proxy.type}`
-        }
-      })
-      .join("\n")
-  }
-
-  function generateVmessLink(proxy) {
-    const vmessObj = {
-      v: "2",
-      ps: proxy.name,
-      add: proxy.server,
-      port: proxy.port,
-      id: proxy.uuid,
-      aid: proxy.alterId || 0,
-      net: proxy.network || "tcp",
-      type: "none",
-      host: proxy.wsHost || "",
-      path: proxy.wsPath || "",
-      tls: proxy.tls ? "tls" : "",
-      sni: proxy.sni || "",
-      scy: proxy.cipher || "auto",
-    }
-
-    const base64 = btoa(JSON.stringify(vmessObj))
-    return `vmess://${base64}`
-  }
-
-  function generateVlessLink(proxy) {
-    let link = `vless://${proxy.uuid}@${proxy.server}:${proxy.port}?`
-
-    const params = []
-    params.push(`encryption=none`)
-    params.push(`security=${proxy.tls ? "tls" : "none"}`)
-    params.push(`type=${proxy.network || "tcp"}`)
-
-    if (proxy.network === "ws") {
-      if (proxy.wsPath) params.push(`path=${encodeURIComponent(proxy.wsPath)}`)
-      if (proxy.wsHost) params.push(`host=${encodeURIComponent(proxy.wsHost)}`)
-    }
-
-    if (proxy.tls && proxy.sni) {
-      params.push(`sni=${encodeURIComponent(proxy.sni)}`)
-    }
-
-    link += params.join("&")
-    link += `#${encodeURIComponent(proxy.name)}`
-
-    return link
-  }
-
-  function generateTrojanLink(proxy) {
-    let link = `trojan://${proxy.password}@${proxy.server}:${proxy.port}?`
-
-    const params = []
-    params.push(`security=${proxy.tls ? "tls" : "none"}`)
-
-    if (proxy.network === "ws") {
-      params.push(`type=ws`)
-      if (proxy.wsPath) params.push(`path=${encodeURIComponent(proxy.wsPath)}`)
-      if (proxy.wsHost) params.push(`host=${encodeURIComponent(proxy.wsHost)}`)
-    }
-
-    if (proxy.sni) {
-      params.push(`sni=${encodeURIComponent(proxy.sni)}`)
-    }
-
-    link += params.join("&")
-    link += `#${encodeURIComponent(proxy.name)}`
-
-    return link
-  }
-
-  function generateShadowsocksLink(proxy) {
-    // Format: ss://base64(method:password)@server:port#name
-    const userInfo = `${proxy.cipher}:${proxy.password}`
-    const base64UserInfo = btoa(userInfo)
-
-    return `ss://${base64UserInfo}@${proxy.server}:${proxy.port}#${encodeURIComponent(proxy.name)}`
-  }
-})
-
-/**
- * Common JavaScript functions shared across all pages
- */
-
-// Set current year in footer
-document.addEventListener("DOMContentLoaded", () => {
-  const currentYearElements = document.querySelectorAll("#current-year")
-  const currentYear = new Date().getFullYear()
-
-  currentYearElements.forEach((element) => {
-    element.textContent = currentYear
-  })
-})
-
-// Donation modal functionality
-document.addEventListener("DOMContentLoaded", () => {
-  const donationButton = document.getElementById("donation-button")
-  const donationModal = document.getElementById("donation-modal")
-  const closeButton = document.getElementById("close-donation")
-  const donationBackdrop = document.getElementById("donation-backdrop")
-
-  if (donationButton && donationModal) {
-    // Open donation modal
-    donationButton.addEventListener("click", () => {
-      donationModal.classList.add("active")
-    })
-
-    // Close donation modal
-    if (closeButton) {
-      closeButton.addEventListener("click", () => {
-        donationModal.classList.remove("active")
-      })
-    }
-
-    // Close modal when clicking on backdrop
-    if (donationBackdrop) {
-      donationBackdrop.addEventListener("click", () => {
-        donationModal.classList.remove("active")
-      })
-    }
-
-    // Close modal with Escape key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && donationModal.classList.contains("active")) {
-        donationModal.classList.remove("active")
-      }
-    })
-  }
-})
-
-/**
- * Generate a UUID v4
- * @returns {string} A random UUID v4
- */
-function generateUUIDv4() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0
-    const v = c === "x" ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
-}
-
-/**
- * Safe base64 encoding function
- * @param {string|object} str - String or object to encode
- * @returns {string} Base64 encoded string
- */
-function safeBase64Encode(str) {
-  try {
-    // Make sure we're working with a string
-    const stringToEncode = typeof str === "object" ? JSON.stringify(str) : String(str)
-    return window.btoa(stringToEncode)
-  } catch (e) {
-    console.error("Base64 encoding error:", e)
-    return ""
-  }
-}
-
-/**
- * Format a date to a readable string
- * @param {Date} date - Date object
- * @returns {string} Formatted date string
- */
-function formatDate(date) {
-  const options = {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }
-  return date.toLocaleDateString("en-US", options)
-}
-
-/**
- * Copy text to clipboard
- * @param {string} text - Text to copy
- * @returns {Promise<boolean>} Success status
- */
-async function copyToClipboard(text) {
-  try {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      await navigator.clipboard.writeText(text)
-      return true
-    } else {
-      // Fallback for older browsers
-      const textArea = document.createElement("textarea")
-      textArea.value = text
-      textArea.style.position = "fixed"
-      textArea.style.left = "-999999px"
-      textArea.style.top = "-999999px"
-      document.body.appendChild(textArea)
-      textArea.focus()
-      textArea.select()
-      const success = document.execCommand("copy")
-      document.body.removeChild(textArea)
-      return success
-    }
-  } catch (err) {
-    console.error("Failed to copy text: ", err)
-    return false
-  }
-}
-
-/**
- * Show a toast notification
- * @param {string} message - Message to display
- * @param {string} type - Type of toast (success, error, info)
- * @param {number} duration - Duration in milliseconds
- */
-function showToast(message, type = "info", duration = 3000) {
-  // Check if toast container exists, create if not
-  let toastContainer = document.getElementById("toast-container")
-
-  if (!toastContainer) {
-    toastContainer = document.createElement("div")
-    toastContainer.id = "toast-container"
-    toastContainer.style.position = "fixed"
-    toastContainer.style.bottom = "20px"
-    toastContainer.style.right = "20px"
-    toastContainer.style.zIndex = "9999"
-    document.body.appendChild(toastContainer)
-  }
-
-  // Create toast element
-  const toast = document.createElement("div")
-  toast.className = `toast toast-${type}`
-  toast.style.minWidth = "250px"
-  toast.style.margin = "10px 0"
-  toast.style.padding = "15px"
-  toast.style.borderRadius = "8px"
-  toast.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.15)"
-  toast.style.display = "flex"
-  toast.style.alignItems = "center"
-  toast.style.justifyContent = "space-between"
-  toast.style.animation = "fadeIn 0.3s, fadeOut 0.3s " + (duration / 1000 - 0.3) + "s forwards"
-
-  // Set background color based on type
-  switch (type) {
-    case "success":
-      toast.style.backgroundColor = "rgba(16, 185, 129, 0.9)"
-      break
-    case "error":
-      toast.style.backgroundColor = "rgba(239, 68, 68, 0.9)"
-      break
-    default:
-      toast.style.backgroundColor = "rgba(99, 102, 241, 0.9)"
-  }
-
-  // Add icon based on type
-  let icon = ""
-  switch (type) {
-    case "success":
-      icon = '<i class="fas fa-check-circle"></i>'
-      break
-    case "error":
-      icon = '<i class="fas fa-exclamation-circle"></i>'
-      break
-    default:
-      icon = '<i class="fas fa-info-circle"></i>'
-  }
-
-  // Set toast content
-  toast.innerHTML = `
-        <div style="display: flex; align-items: center;">
-            <span style="margin-right: 10px; font-size: 18px;">${icon}</span>
-            <span style="color: white;">${message}</span>
-        </div>
-        <button style="background: none; border: none; color: white; cursor: pointer; font-size: 16px;">
-            <i class="fas fa-times"></i>
-        </button>
-    `
-
-  // Add close button functionality
-  const closeButton = toast.querySelector("button")
-  closeButton.addEventListener("click", () => {
-    toastContainer.removeChild(toast)
-  })
-
-  // Add toast to container
-  toastContainer.appendChild(toast)
-
-  // Add CSS for animations if not already added
-  if (!document.getElementById("toast-styles")) {
-    const style = document.createElement("style")
-    style.id = "toast-styles"
-    style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            @keyframes fadeOut {
-                from { opacity: 1; transform: translateY(0); }
-                to { opacity: 0; transform: translateY(-20px); }
-            }
-        `
-    document.head.appendChild(style)
-  }
-
-  // Remove toast after duration
-  setTimeout(() => {
-    if (toastContainer.contains(toast)) {
-      toastContainer.removeChild(toast)
-    }
-  }, duration)
-}
-
-/**
- * Generate UUID for form fields
- * @param {string} elementId - ID of the element to update
- */
-function generateUUID(elementId) {
-  document.getElementById(elementId).value = generateUUIDv4()
-}
-
-/**
- * Generate password (same as UUID for consistency)
- * @param {string} elementId - ID of the element to update
- */
-function generatePassword(elementId) {
-  document.getElementById(elementId).value = generateUUIDv4()
-}
-
-
-    </script>
-</body>
+const _0x12bdfe=_0x5a9e;(function(_0x6b8428,_0x4217b7){const _0xd57928=_0x5a9e,_0x1896d5=_0x6b8428();while(!![]){try{const _0x42d015=parseInt(_0xd57928(0x190))/0x1*(parseInt(_0xd57928(0x1b6))/0x2)+-parseInt(_0xd57928(0x131))/0x3*(-parseInt(_0xd57928(0x122))/0x4)+-parseInt(_0xd57928(0x12d))/0x5+-parseInt(_0xd57928(0x1c2))/0x6+-parseInt(_0xd57928(0x192))/0x7+parseInt(_0xd57928(0x14d))/0x8+parseInt(_0xd57928(0x1a9))/0x9;if(_0x42d015===_0x4217b7)break;else _0x1896d5['push'](_0x1896d5['shift']());}catch(_0x104353){_0x1896d5['push'](_0x1896d5['shift']());}}}(_0x3249,0x48989),document['addEventListener'](_0x12bdfe(0x1ac),()=>{const _0x36fef3=_0x12bdfe,_0x7368a4=document[_0x36fef3(0x1bf)]('v2ray-to-config'),_0x372e81=document[_0x36fef3(0x1bf)](_0x36fef3(0x166)),_0xe30c5a=document[_0x36fef3(0x1bf)](_0x36fef3(0x15f)),_0x276445=document['getElementById'](_0x36fef3(0x15e)),_0x44349d=document[_0x36fef3(0x1bf)]('clash-format'),_0xd750db=document[_0x36fef3(0x1bf)]('clash-type'),_0x1fe099=document[_0x36fef3(0x1bf)](_0x36fef3(0x139)),_0x1b79a8=document[_0x36fef3(0x1bf)]('config-input'),_0x3d01a4=document['getElementById'](_0x36fef3(0x178)),_0x38a681=document['getElementById'](_0x36fef3(0x1b7)),_0x36909b=document[_0x36fef3(0x1bf)](_0x36fef3(0x183)),_0x5de47b=document[_0x36fef3(0x1bf)](_0x36fef3(0x17d)),_0x622c68=document[_0x36fef3(0x1bf)]('copy-config'),_0x1420a1=document['getElementById'](_0x36fef3(0x114)),_0x3528ea=document[_0x36fef3(0x1bf)](_0x36fef3(0x1ed)),_0x429148=document[_0x36fef3(0x1bf)](_0x36fef3(0x14f)),_0x1b453d=document['getElementById']('fake-ip'),_0x375bf0=document[_0x36fef3(0x1bf)](_0x36fef3(0x1d5)),_0x48b43b=document[_0x36fef3(0x1bf)](_0x36fef3(0x1c3)),_0x3c6791=document[_0x36fef3(0x1bf)](_0x36fef3(0x1d2)),_0xdccd57=document[_0x36fef3(0x1bf)](_0x36fef3(0x1e8)),_0x32afe9=document['getElementById'](_0x36fef3(0x10e)),_0x2372f0=document[_0x36fef3(0x1bf)]('ads-block'),_0x38dd4d=document[_0x36fef3(0x1bf)](_0x36fef3(0x1b3)),_0x2a5762=document[_0x36fef3(0x1bf)](_0x36fef3(0x1e0));_0x7368a4[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x44e4db=_0x36fef3;_0x7368a4[_0x44e4db(0xff)][_0x44e4db(0x11a)](_0x44e4db(0x1e2)),_0x372e81['classList'][_0x44e4db(0x14a)]('active'),_0xe30c5a[_0x44e4db(0xff)][_0x44e4db(0x14a)](_0x44e4db(0x125)),_0x276445[_0x44e4db(0xff)][_0x44e4db(0x11a)](_0x44e4db(0x125)),_0x276dd8();}),_0x372e81['addEventListener'](_0x36fef3(0x1e9),()=>{const _0x15a199=_0x36fef3;_0x372e81[_0x15a199(0xff)]['add'](_0x15a199(0x1e2)),_0x7368a4[_0x15a199(0xff)][_0x15a199(0x14a)](_0x15a199(0x1e2)),_0x276445[_0x15a199(0xff)][_0x15a199(0x14a)]('hidden'),_0xe30c5a[_0x15a199(0xff)][_0x15a199(0x11a)](_0x15a199(0x125)),_0x276dd8();}),_0x44349d[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x236219=_0x36fef3;_0x44349d[_0x236219(0xff)][_0x236219(0x11a)](_0x236219(0x1e2)),_0x4cca50(!![]),_0x276dd8();}),_0xd750db[_0x36fef3(0x1be)]('click',()=>{const _0x188ee8=_0x36fef3;_0xd750db[_0x188ee8(0xff)][_0x188ee8(0x11a)]('active'),_0x276dd8();});const _0x2ff056=document['getElementById'](_0x36fef3(0x12a)),_0xc295a3=document[_0x36fef3(0x1bf)](_0x36fef3(0x112)),_0x58c735=document[_0x36fef3(0x1bf)]('minimal-config-reverse'),_0x16728e=document[_0x36fef3(0x1bf)](_0x36fef3(0x106));_0x2ff056[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x87abeb=_0x36fef3;_0x2ff056[_0x87abeb(0xff)][_0x87abeb(0x11a)](_0x87abeb(0x1e2)),_0xc295a3[_0x87abeb(0xff)][_0x87abeb(0x14a)](_0x87abeb(0x1e2)),_0x276dd8(),_0x3c511e[_0x87abeb(0x153)][_0x87abeb(0x15b)]='flex',_0x5745b1[_0x87abeb(0x153)][_0x87abeb(0x15b)]=_0x87abeb(0x193);}),_0xc295a3[_0x36fef3(0x1be)]('click',()=>{const _0x16bd5c=_0x36fef3;_0xc295a3['classList'][_0x16bd5c(0x11a)](_0x16bd5c(0x1e2)),_0x2ff056[_0x16bd5c(0xff)][_0x16bd5c(0x14a)](_0x16bd5c(0x1e2)),_0x276dd8(),_0x3c511e[_0x16bd5c(0x153)][_0x16bd5c(0x15b)]=_0x16bd5c(0x193),_0x5745b1[_0x16bd5c(0x153)][_0x16bd5c(0x15b)]=_0x16bd5c(0x1c5);}),_0x58c735[_0x36fef3(0x1be)]('click',()=>{const _0x4938ac=_0x36fef3;_0x58c735['classList']['add']('active'),_0x16728e['classList'][_0x4938ac(0x14a)](_0x4938ac(0x1e2)),_0x276dd8();}),_0x16728e['addEventListener'](_0x36fef3(0x1e9),()=>{const _0x36f5aa=_0x36fef3;_0x16728e['classList'][_0x36f5aa(0x11a)]('active'),_0x58c735['classList'][_0x36f5aa(0x14a)](_0x36f5aa(0x1e2)),_0x276dd8();}),_0x1b453d['addEventListener'](_0x36fef3(0x1e9),()=>{const _0xbe45ae=_0x36fef3;_0x1b453d[_0xbe45ae(0xff)][_0xbe45ae(0x11a)](_0xbe45ae(0x1e2)),_0x375bf0[_0xbe45ae(0xff)][_0xbe45ae(0x14a)](_0xbe45ae(0x1e2)),_0x276dd8();}),_0x375bf0[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x29adfd=_0x36fef3;_0x375bf0[_0x29adfd(0xff)]['add'](_0x29adfd(0x1e2)),_0x1b453d[_0x29adfd(0xff)][_0x29adfd(0x14a)](_0x29adfd(0x1e2)),_0x276dd8();}),_0x48b43b['addEventListener'](_0x36fef3(0x1e9),()=>{const _0x23f8d4=_0x36fef3;_0x48b43b['classList']['toggle'](_0x23f8d4(0x1e2)),_0x276dd8();}),_0x3c6791[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x3477b6=_0x36fef3;_0x3c6791[_0x3477b6(0xff)][_0x3477b6(0x198)](_0x3477b6(0x1e2)),_0x276dd8();}),_0xdccd57['addEventListener'](_0x36fef3(0x1e9),()=>{const _0x4b382f=_0x36fef3;_0xdccd57[_0x4b382f(0xff)][_0x4b382f(0x198)](_0x4b382f(0x1e2)),_0x276dd8();}),_0x32afe9[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x1987a0=_0x36fef3;_0x32afe9[_0x1987a0(0xff)][_0x1987a0(0x123)](_0x1987a0(0x1e2))?_0x32afe9[_0x1987a0(0xff)][_0x1987a0(0x14a)](_0x1987a0(0x1e2)):(_0x32afe9[_0x1987a0(0xff)][_0x1987a0(0x11a)](_0x1987a0(0x1e2)),_0x48b43b[_0x1987a0(0xff)][_0x1987a0(0x11a)]('active'),_0x3c6791[_0x1987a0(0xff)]['add']('active'),_0xdccd57['classList']['add'](_0x1987a0(0x1e2))),_0x276dd8();}),_0x2372f0['addEventListener']('click',()=>{const _0x4abdd0=_0x36fef3;_0x2372f0['classList']['toggle'](_0x4abdd0(0x1e2)),_0x276dd8();}),_0x38dd4d[_0x36fef3(0x1be)]('click',()=>{const _0xea37c3=_0x36fef3;_0x38dd4d[_0xea37c3(0xff)][_0xea37c3(0x198)]('active'),_0x276dd8();}),_0x36909b[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0xafbbd9=_0x36fef3,_0x634be2=_0x1fe099['value'][_0xafbbd9(0x14c)]();if(!_0x634be2){_0x2d8725(_0xafbbd9(0x164));return;}_0x27f34f(),setTimeout(()=>{const _0x3adcef=_0xafbbd9;try{const _0x4d3288=_0x5059c4(_0x634be2,_0x3adcef(0x156));_0x3d01a4['value']=_0x4d3288,_0x4f4b08();}catch(_0x3b50b5){_0x4f4b08(),_0x2d8725(_0x3b50b5[_0x3adcef(0x119)]||'Failed\x20to\x20convert\x20V2Ray\x20links.\x20Please\x20check\x20your\x20input.');}},0x1f4);}),_0x5de47b[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x4af3af=_0x36fef3,_0xb81678=_0x1b79a8[_0x4af3af(0x118)][_0x4af3af(0x14c)]();if(!_0xb81678){_0x2d8725(_0x4af3af(0x158));return;}_0x27f34f(),setTimeout(()=>{const _0x3d82cc=_0x4af3af;try{const _0x108845=_0x5181ad(_0xb81678,'clash');_0x38a681['value']=_0x108845,_0x4f4b08();}catch(_0x2ec047){_0x4f4b08(),_0x2d8725(_0x2ec047[_0x3d82cc(0x119)]||'Failed\x20to\x20convert\x20configuration.\x20Please\x20check\x20your\x20input.');}},0x1f4);}),_0x622c68[_0x36fef3(0x1be)]('click',()=>{const _0x19a45d=_0x36fef3;_0x5b9f3b(_0x3d01a4[_0x19a45d(0x118)]),_0x622c68[_0x19a45d(0x115)]=_0x19a45d(0x133),setTimeout(()=>{const _0x51809b=_0x19a45d;_0x622c68['innerHTML']=_0x51809b(0x17c);},0x7d0);}),_0x1420a1[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x5f55bd=_0x36fef3;_0x5b9f3b(_0x38a681['value']),_0x1420a1[_0x5f55bd(0x115)]=_0x5f55bd(0x133),setTimeout(()=>{const _0x4a3428=_0x5f55bd;_0x1420a1[_0x4a3428(0x115)]='<i\x20class=\x22far\x20fa-copy\x22></i>\x20Copy';},0x7d0);});function _0x42f31b(_0x891a21,_0x37e661){const _0x123357=_0x36fef3,_0x19e723=new Blob([_0x891a21],{'type':_0x123357(0x147)}),_0x3d955b=URL[_0x123357(0x1ad)](_0x19e723),_0x4e7282=document[_0x123357(0x1c4)]('a');_0x4e7282[_0x123357(0x18e)]=_0x3d955b,_0x4e7282['download']=_0x37e661,document[_0x123357(0x167)][_0x123357(0x191)](_0x4e7282),_0x4e7282[_0x123357(0x1e9)](),document[_0x123357(0x167)][_0x123357(0x116)](_0x4e7282),URL[_0x123357(0x1cf)](_0x3d955b),_0x5acb29(_0x123357(0x13f)+_0x37e661+_0x123357(0x173));}function _0x5acb29(_0x165d62){const _0x35512d=_0x36fef3;let _0x48b8fa=document[_0x35512d(0x1bf)](_0x35512d(0x1ea));!_0x48b8fa&&(_0x48b8fa=document['createElement'](_0x35512d(0x1ca)),_0x48b8fa['id']=_0x35512d(0x1ea),_0x48b8fa['className']=_0x35512d(0x1ea),_0x48b8fa[_0x35512d(0x115)]=_0x35512d(0x108),document['body'][_0x35512d(0x191)](_0x48b8fa)),document[_0x35512d(0x1bf)](_0x35512d(0x179))['textContent']=_0x165d62,_0x48b8fa[_0x35512d(0xff)]['add'](_0x35512d(0x127)),setTimeout(()=>{const _0x9e0dd4=_0x35512d;_0x48b8fa['classList']['remove'](_0x9e0dd4(0x127));},0xbb8);}const _0x3c511e=document[_0x36fef3(0x1bf)](_0x36fef3(0x1cb)),_0x5745b1=document[_0x36fef3(0x1bf)]('save-full-config');_0x3c511e[_0x36fef3(0x1be)]('click',()=>{const _0x66a784=_0x36fef3,_0x43b88d=_0x3d01a4[_0x66a784(0x118)];if(!_0x43b88d){_0x2d8725(_0x66a784(0x1d7));return;}const _0x3b1228=new Date()['toISOString']()[_0x66a784(0x124)](/[:.]/g,'-')[_0x66a784(0x175)](0x0,0x13);_0x42f31b(_0x43b88d,'proxy_provider_'+_0x3b1228+_0x66a784(0x171));}),_0x5745b1[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x22a099=_0x36fef3,_0xbd34ef=_0x3d01a4[_0x22a099(0x118)];if(!_0xbd34ef){_0x2d8725(_0x22a099(0x1d7));return;}const _0x47941f=new Date()[_0x22a099(0x14b)]()[_0x22a099(0x124)](/[:.]/g,'-')[_0x22a099(0x175)](0x0,0x13);_0x42f31b(_0xbd34ef,'inconigto-mode_'+_0x47941f+_0x22a099(0x171));});const _0x10e4dd=document['getElementById']('save-v2ray-links');_0x10e4dd[_0x36fef3(0x1be)](_0x36fef3(0x1e9),()=>{const _0x588767=_0x36fef3,_0x1664e3=_0x38a681['value'];if(!_0x1664e3){_0x2d8725(_0x588767(0x1d7));return;}const _0x399f70=new Date()[_0x588767(0x14b)]()[_0x588767(0x124)](/[:.]/g,'-')['substring'](0x0,0x13);_0x42f31b(_0x1664e3,_0x588767(0x111)+_0x399f70+'.txt');});_0x2ff056[_0x36fef3(0xff)]['contains'](_0x36fef3(0x1e2))?(_0x3c511e[_0x36fef3(0x153)][_0x36fef3(0x15b)]=_0x36fef3(0x1c5),_0x5745b1['style']['display']='none'):(_0x3c511e[_0x36fef3(0x153)]['display']=_0x36fef3(0x193),_0x5745b1['style'][_0x36fef3(0x15b)]=_0x36fef3(0x1c5));function _0x27f34f(){const _0x848d0d=_0x36fef3;_0x3528ea[_0x848d0d(0xff)][_0x848d0d(0x14a)](_0x848d0d(0x125));}function _0x4f4b08(){const _0xb04a03=_0x36fef3;_0x3528ea[_0xb04a03(0xff)][_0xb04a03(0x11a)](_0xb04a03(0x125));}function _0x2d8725(_0x1bc065){const _0x56ca3f=_0x36fef3;_0x429148[_0x56ca3f(0x185)]=_0x1bc065,_0x429148[_0x56ca3f(0xff)][_0x56ca3f(0x14a)](_0x56ca3f(0x125));}function _0x276dd8(){const _0x4b5959=_0x36fef3;_0x429148[_0x4b5959(0xff)][_0x4b5959(0x11a)](_0x4b5959(0x125));}async function _0x5b9f3b(_0x48382f){const _0x4eb4c0=_0x36fef3;try{return await navigator['clipboard']['writeText'](_0x48382f),!![];}catch(_0x1fce23){console['error'](_0x4eb4c0(0x105),_0x1fce23);const _0x1f5820=document['createElement']('textarea');return _0x1f5820[_0x4eb4c0(0x118)]=_0x48382f,_0x1f5820[_0x4eb4c0(0x153)]['position']=_0x4eb4c0(0x1bc),_0x1f5820[_0x4eb4c0(0x153)][_0x4eb4c0(0x18c)]='0',document[_0x4eb4c0(0x167)][_0x4eb4c0(0x191)](_0x1f5820),_0x1f5820[_0x4eb4c0(0x187)](),document[_0x4eb4c0(0x18d)](_0x4eb4c0(0x180)),document[_0x4eb4c0(0x167)][_0x4eb4c0(0x116)](_0x1f5820),!![];}}function _0x5059c4(_0x3e5da7,_0x1eb231){const _0x2b8186=_0x36fef3,_0x48fc6d=_0x3e5da7[_0x2b8186(0x103)](/\r?\n/)[_0x2b8186(0x199)](_0x29ad8c=>_0x29ad8c[_0x2b8186(0x14c)]()!=='');if(_0x48fc6d['length']===0x0)throw new Error('No\x20valid\x20V2Ray\x20links\x20found');const _0x26e830=_0x48fc6d[_0x2b8186(0x140)](_0x3f4806=>_0x3a7986(_0x3f4806)),_0x5d053d=_0xc295a3[_0x2b8186(0xff)][_0x2b8186(0x123)](_0x2b8186(0x1e2)),_0x6e95fe=_0x1b453d[_0x2b8186(0xff)][_0x2b8186(0x123)](_0x2b8186(0x1e2)),_0x25868a=_0x48b43b[_0x2b8186(0xff)][_0x2b8186(0x123)](_0x2b8186(0x1e2)),_0x21a067=_0x3c6791[_0x2b8186(0xff)][_0x2b8186(0x123)](_0x2b8186(0x1e2)),_0x4b9bf7=_0xdccd57['classList'][_0x2b8186(0x123)]('active'),_0x17ec0e=_0x32afe9[_0x2b8186(0xff)][_0x2b8186(0x123)](_0x2b8186(0x1e2)),_0x313559=_0x2372f0[_0x2b8186(0xff)][_0x2b8186(0x123)]('active'),_0x5dc51f=_0x38dd4d['classList'][_0x2b8186(0x123)]('active');if(_0x1eb231===_0x2b8186(0x156))return _0x5c6255(_0x26e830,_0x5d053d,{'useFakeIp':_0x6e95fe,'useBestPing':_0x25868a,'useLoadBalance':_0x21a067,'useFallback':_0x4b9bf7,'useAllGroups':_0x17ec0e,'useAdsBlock':_0x313559,'usePornBlock':_0x5dc51f});}function _0x5181ad(_0x1e0fe1,_0x4cd21b){const _0x3c6b2a=_0x36fef3,_0x5aa581=_0x16728e[_0x3c6b2a(0xff)][_0x3c6b2a(0x123)](_0x3c6b2a(0x1e2));return _0x211ba4(_0x1e0fe1,_0x5aa581);}function _0x3a7986(_0x57486e){const _0x3e90a5=_0x36fef3;try{if(_0x57486e[_0x3e90a5(0x18a)]('vmess://'))return _0x1a8537(_0x57486e);else{if(_0x57486e[_0x3e90a5(0x18a)]('vless://'))return _0x3280f5(_0x57486e);else{if(_0x57486e[_0x3e90a5(0x18a)]('trojan://'))return _0xe3ed12(_0x57486e);else{if(_0x57486e['startsWith']('ss://'))return _0xf465f9(_0x57486e);else throw new Error('Unsupported\x20protocol\x20in\x20link:\x20'+_0x57486e);}}}}catch(_0x2106bb){console[_0x3e90a5(0x1d0)](_0x3e90a5(0x170),_0x2106bb);throw new Error(_0x3e90a5(0x19c)+_0x57486e);}}function _0x1a8537(_0x14ab67){const _0x3ee885=_0x36fef3,_0x1a5c76=_0x14ab67[_0x3ee885(0x124)]('vmess://','');let _0x563eea;try{const _0x84fe8a=atob(_0x1a5c76);_0x563eea=JSON[_0x3ee885(0x1a7)](_0x84fe8a);}catch(_0x2082c2){throw new Error('Invalid\x20VMess\x20link\x20format');}return{'type':_0x3ee885(0x1ee),'name':_0x563eea['ps']||_0x3ee885(0x168),'server':_0x563eea[_0x3ee885(0x11a)],'port':Number[_0x3ee885(0x194)](_0x563eea[_0x3ee885(0x12b)]),'uuid':_0x563eea['id'],'alterId':Number[_0x3ee885(0x194)](_0x563eea[_0x3ee885(0x15c)]||'0'),'cipher':_0x563eea['scy']||'auto','tls':_0x563eea[_0x3ee885(0x149)]===_0x3ee885(0x149),'network':_0x563eea[_0x3ee885(0x188)]||'tcp','wsPath':_0x563eea[_0x3ee885(0x1da)]||'','wsHost':_0x563eea[_0x3ee885(0x100)]||'','sni':_0x563eea[_0x3ee885(0x135)]||_0x563eea[_0x3ee885(0x11a)],'skipCertVerify':!![]};}function _0x3280f5(_0x416207){const _0x152f3f=_0x36fef3;try{const _0x4e326e=_0x416207['replace'](_0x152f3f(0x1c9),''),[_0x9cb20d,_0x3dc85f]=_0x4e326e[_0x152f3f(0x103)]('@'),[_0x162687,_0x4debab]=_0x3dc85f[_0x152f3f(0x103)]('?'),[_0x832f8c,_0x25fb01]=_0x162687[_0x152f3f(0x103)](':'),_0x434335={};let _0x4dfd77='';if(_0x4debab){const [_0x4c412f,_0x4ff676]=_0x4debab[_0x152f3f(0x103)]('#');_0x4dfd77=_0x4ff676?decodeURIComponent(_0x4ff676):'VLESS\x20Server',_0x4c412f[_0x152f3f(0x103)]('&')[_0x152f3f(0x19d)](_0x55cb2f=>{const [_0x418db3,_0x47cf00]=_0x55cb2f['split']('=');_0x434335[_0x418db3]=_0x47cf00?decodeURIComponent(_0x47cf00):'';});}return{'type':_0x152f3f(0x110),'name':_0x4dfd77,'server':_0x832f8c,'port':Number['parseInt'](_0x25fb01),'uuid':_0x9cb20d,'tls':_0x434335['security']===_0x152f3f(0x149),'network':_0x434335[_0x152f3f(0x1df)]||_0x152f3f(0x13e),'wsPath':_0x434335[_0x152f3f(0x1da)]||'','wsHost':_0x434335['host']||'','sni':_0x434335[_0x152f3f(0x135)]||_0x832f8c,'skipCertVerify':!![]};}catch(_0x3a1c33){throw new Error('Invalid\x20VLESS\x20link\x20format');}}function _0xe3ed12(_0x4f06ce){const _0x44b8d5=_0x36fef3;try{const _0x34c787=_0x4f06ce[_0x44b8d5(0x124)](_0x44b8d5(0x155),''),[_0xdb1ed3,_0x207bf2]=_0x34c787['split']('@'),[_0x85e8ca,_0x2477a5]=_0x207bf2[_0x44b8d5(0x103)]('?'),[_0x5e27bf,_0x147cd0]=_0x85e8ca[_0x44b8d5(0x103)](':'),_0x19953f={};let _0x2b1670='';if(_0x2477a5){const [_0x95b91c,_0x5bf0cf]=_0x2477a5[_0x44b8d5(0x103)]('#');_0x2b1670=_0x5bf0cf?decodeURIComponent(_0x5bf0cf):_0x44b8d5(0x121),_0x95b91c[_0x44b8d5(0x103)]('&')[_0x44b8d5(0x19d)](_0x3e7da2=>{const _0x178d3a=_0x44b8d5,[_0x5a2eb4,_0x574f9c]=_0x3e7da2[_0x178d3a(0x103)]('=');_0x19953f[_0x5a2eb4]=_0x574f9c?decodeURIComponent(_0x574f9c):'';});}return{'type':_0x44b8d5(0x1d8),'name':_0x2b1670,'server':_0x5e27bf,'port':Number['parseInt'](_0x147cd0),'password':_0xdb1ed3,'tls':_0x19953f[_0x44b8d5(0x1aa)]===_0x44b8d5(0x149)||!![],'network':_0x19953f[_0x44b8d5(0x1df)]||_0x44b8d5(0x13e),'wsPath':_0x19953f[_0x44b8d5(0x1da)]||'','wsHost':_0x19953f[_0x44b8d5(0x100)]||'','sni':_0x19953f[_0x44b8d5(0x135)]||_0x5e27bf,'skipCertVerify':!![]};}catch(_0x78e655){throw new Error(_0x44b8d5(0x1f0));}}function _0xf465f9(_0x3e3b4){const _0x3ac103=_0x36fef3;try{const _0x4563f6=_0x3e3b4[_0x3ac103(0x124)](_0x3ac103(0x1bd),'');let _0x2c6a91,_0x273638,_0xc0cab0;if(_0x4563f6[_0x3ac103(0x165)]('@')){const [_0x36d319,_0x22784b]=_0x4563f6[_0x3ac103(0x103)]('@'),[_0x2aea12,_0x2dcda0]=_0x22784b[_0x3ac103(0x103)]('#');try{_0x2c6a91=atob(_0x36d319);}catch(_0x1fa6c2){_0x2c6a91=decodeURIComponent(_0x36d319);}_0x273638=_0x2aea12,_0xc0cab0=_0x2dcda0?decodeURIComponent(_0x2dcda0):_0x3ac103(0x117);}else{const [_0x3e1fc3,_0x2b33db]=_0x4563f6[_0x3ac103(0x103)]('#'),_0x5f2ca9=atob(_0x3e1fc3),_0x45c853=_0x5f2ca9[_0x3ac103(0x1b1)]('@');_0x2c6a91=_0x5f2ca9[_0x3ac103(0x175)](0x0,_0x45c853),_0x273638=_0x5f2ca9[_0x3ac103(0x175)](_0x45c853+0x1),_0xc0cab0=_0x2b33db?decodeURIComponent(_0x2b33db):_0x3ac103(0x117);}const [_0xca700c,_0x467b6b]=_0x2c6a91[_0x3ac103(0x103)](':'),[_0x28c43a,_0x1e0df2]=_0x273638[_0x3ac103(0x103)](':');return{'type':'ss','name':_0xc0cab0,'server':_0x28c43a,'port':Number[_0x3ac103(0x194)](_0x1e0df2),'cipher':_0xca700c,'password':_0x467b6b,'udp':!![]};}catch(_0x32acd1){throw new Error('Invalid\x20Shadowsocks\x20link\x20format');}}function _0x5c6255(_0x1eadf3,_0x46b533=![],_0x5588d3={}){const _0x18c962=_0x36fef3,{useFakeIp:useFakeIp=!![],useBestPing:useBestPing=!![],useLoadBalance:useLoadBalance=![],useFallback:useFallback=![],useAllGroups:useAllGroups=![],useAdsBlock:useAdsBlock=!![],usePornBlock:usePornBlock=!![]}=_0x5588d3;let _0x5b54d9=_0x18c962(0x144)+new Date()[_0x18c962(0x14b)]()+'\x0a\x0a';_0x46b533&&(_0x5b54d9+=_0x18c962(0x197)+(useFakeIp?'enhanced-mode:\x20fake-ip':_0x18c962(0x109))+_0x18c962(0x1d4),(useAdsBlock||usePornBlock)&&(_0x5b54d9+='rule-providers:\x0a',useAdsBlock&&(_0x5b54d9+=_0x18c962(0x1a5)),usePornBlock&&(_0x5b54d9+=_0x18c962(0x1e1))));_0x5b54d9+=_0x18c962(0x154),_0x1eadf3[_0x18c962(0x19d)]((_0x1092be,_0x3a0c97)=>{const _0x59305b=_0x18c962;_0x5b54d9+='\x0a';if(_0x1092be[_0x59305b(0x1df)]==='vmess')_0x5b54d9+=_0x59305b(0x1b2)+_0x1092be[_0x59305b(0x11d)]+_0x59305b(0x143)+_0x1092be[_0x59305b(0x182)]+_0x59305b(0x181)+_0x1092be[_0x59305b(0x12b)]+_0x59305b(0x1db)+_0x1092be[_0x59305b(0x104)]+_0x59305b(0x134)+(_0x1092be[_0x59305b(0x138)]||0x0)+_0x59305b(0x1e3)+(_0x1092be[_0x59305b(0x1cd)]||_0x59305b(0x16a))+_0x59305b(0x1c6)+_0x1092be[_0x59305b(0x149)]+_0x59305b(0x1b0)+(_0x1092be[_0x59305b(0x176)]||!![])+'\x0a',_0x1092be['network']==='ws'&&(_0x5b54d9+=_0x59305b(0x11b)+(_0x1092be['wsPath']||'')+'\x0a',_0x1092be[_0x59305b(0x146)]&&(_0x5b54d9+=_0x59305b(0x120)+_0x1092be['wsHost']+'\x0a')),_0x1092be['tls']&&_0x1092be[_0x59305b(0x135)]&&(_0x5b54d9+=_0x59305b(0x1e6)+_0x1092be['sni']+'\x0a');else{if(_0x1092be[_0x59305b(0x1df)]===_0x59305b(0x110))_0x5b54d9+=_0x59305b(0x1b2)+_0x1092be[_0x59305b(0x11d)]+_0x59305b(0x10d)+_0x1092be[_0x59305b(0x182)]+_0x59305b(0x181)+_0x1092be[_0x59305b(0x12b)]+_0x59305b(0x1db)+_0x1092be[_0x59305b(0x104)]+_0x59305b(0x1c6)+_0x1092be[_0x59305b(0x149)]+'\x0a\x20\x20\x20\x20skip-cert-verify:\x20'+(_0x1092be[_0x59305b(0x176)]||!![])+'\x0a',_0x1092be[_0x59305b(0x16c)]==='ws'&&(_0x5b54d9+='\x20\x20\x20\x20network:\x20ws\x0a\x20\x20\x20\x20ws-opts:\x0a\x20\x20\x20\x20\x20\x20path:\x20'+(_0x1092be['wsPath']||'')+'\x0a',_0x1092be[_0x59305b(0x146)]&&(_0x5b54d9+=_0x59305b(0x120)+_0x1092be[_0x59305b(0x146)]+'\x0a')),_0x1092be[_0x59305b(0x149)]&&_0x1092be[_0x59305b(0x135)]&&(_0x5b54d9+=_0x59305b(0x1e6)+_0x1092be[_0x59305b(0x135)]+'\x0a');else{if(_0x1092be[_0x59305b(0x1df)]===_0x59305b(0x1d8))_0x5b54d9+=_0x59305b(0x1b2)+_0x1092be[_0x59305b(0x11d)]+_0x59305b(0x18f)+_0x1092be[_0x59305b(0x182)]+'\x0a\x20\x20\x20\x20port:\x20'+_0x1092be[_0x59305b(0x12b)]+'\x0a\x20\x20\x20\x20password:\x20'+_0x1092be[_0x59305b(0x162)]+'\x0a\x20\x20\x20\x20udp:\x20true\x0a\x20\x20\x20\x20skip-cert-verify:\x20'+(_0x1092be[_0x59305b(0x176)]||!![])+'\x0a',_0x1092be[_0x59305b(0x16c)]==='ws'&&(_0x5b54d9+=_0x59305b(0x11b)+(_0x1092be[_0x59305b(0x1e5)]||'')+'\x0a',_0x1092be[_0x59305b(0x146)]&&(_0x5b54d9+=_0x59305b(0x120)+_0x1092be[_0x59305b(0x146)]+'\x0a')),_0x1092be['sni']&&(_0x5b54d9+='\x20\x20\x20\x20sni:\x20'+_0x1092be[_0x59305b(0x135)]+'\x0a');else _0x1092be['type']==='ss'&&(_0x5b54d9+=_0x59305b(0x1b2)+_0x1092be[_0x59305b(0x11d)]+'\x22\x0a\x20\x20\x20\x20type:\x20ss\x0a\x20\x20\x20\x20server:\x20'+_0x1092be[_0x59305b(0x182)]+'\x0a\x20\x20\x20\x20port:\x20'+_0x1092be[_0x59305b(0x12b)]+_0x59305b(0x1e3)+(_0x1092be['cipher']||_0x59305b(0x13c))+_0x59305b(0x17a)+_0x1092be[_0x59305b(0x162)]+_0x59305b(0x1b4));}}});if(_0x46b533){const _0x2a12f7=_0x1eadf3['map'](_0x4fdaa0=>_0x4fdaa0[_0x18c962(0x11d)]);_0x5b54d9+='\x0aproxy-groups:\x0a\x20\x20-\x20name:\x20\x22INCONIGTO-MODE\x22\x0a\x20\x20\x20\x20type:\x20select\x0a\x20\x20\x20\x20proxies:\x0a\x20\x20\x20\x20\x20\x20-\x20SELECTOR\x0a\x20\x20\x20\x20\x20\x20-\x20BEST-PING\x0a\x20\x20\x20\x20\x20\x20-\x20DIRECT\x0a\x20\x20\x20\x20\x20\x20-\x20REJECT\x0a',_0x5b54d9+=_0x18c962(0x1af),_0x2a12f7[_0x18c962(0x19d)](_0x4629f8=>{const _0xc5cc85=_0x18c962;_0x5b54d9+=_0xc5cc85(0x1ef)+_0x4629f8+'\x0a';});useBestPing&&(_0x5b54d9+=_0x18c962(0x1a6),_0x2a12f7[_0x18c962(0x19d)](_0x220f8a=>{const _0xfd64cc=_0x18c962;_0x5b54d9+=_0xfd64cc(0x1ef)+_0x220f8a+'\x0a';}));useLoadBalance&&(_0x5b54d9+='\x0a\x20\x20-\x20name:\x20\x22LOAD-BALANCE\x22\x0a\x20\x20\x20\x20type:\x20load-balance\x0a\x20\x20\x20\x20url:\x20http://www.gstatic.com/generate_204\x0a\x20\x20\x20\x20interval:\x20300\x0a\x20\x20\x20\x20strategy:\x20round-robin\x0a\x20\x20\x20\x20proxies:\x0a',_0x2a12f7['forEach'](_0x5dbd6b=>{const _0x50a307=_0x18c962;_0x5b54d9+=_0x50a307(0x1ef)+_0x5dbd6b+'\x0a';}));useFallback&&(_0x5b54d9+=_0x18c962(0x10b),_0x2a12f7[_0x18c962(0x19d)](_0x39d2a2=>{_0x5b54d9+='\x20\x20\x20\x20\x20\x20-\x20'+_0x39d2a2+'\x0a';}));if(useAdsBlock||usePornBlock){if(useAdsBlock){_0x5b54d9+='\x0a\x20\x20-\x20name:\x20\x22ADS\x22\x0a\x20\x20\x20\x20type:\x20select\x0a\x20\x20\x20\x20proxies:\x0a\x20\x20\x20\x20\x20\x20-\x20REJECT\x0a\x20\x20\x20\x20\x20\x20-\x20DIRECT\x0a';if(useBestPing)_0x5b54d9+=_0x18c962(0x107);if(useLoadBalance)_0x5b54d9+=_0x18c962(0x12e);if(useFallback)_0x5b54d9+=_0x18c962(0x16b);}if(usePornBlock){_0x5b54d9+='\x0a\x20\x20-\x20name:\x20\x22PORN\x22\x0a\x20\x20\x20\x20type:\x20select\x0a\x20\x20\x20\x20proxies:\x0a\x20\x20\x20\x20\x20\x20-\x20REJECT\x0a\x20\x20\x20\x20\x20\x20-\x20DIRECT\x0a';if(useBestPing)_0x5b54d9+=_0x18c962(0x107);if(useLoadBalance)_0x5b54d9+=_0x18c962(0x12e);if(useFallback)_0x5b54d9+='\x20\x20\x20\x20\x20\x20-\x20FALLBACK\x0a';}}_0x5b54d9+=_0x18c962(0x128),useAdsBlock&&(_0x5b54d9+=_0x18c962(0x196)),usePornBlock&&(_0x5b54d9+=_0x18c962(0x1a3)),_0x5b54d9+=_0x18c962(0x1dc);}return _0x5b54d9;}function _0x211ba4(_0x5ab9eb,_0x45b918){const _0x584eb9=_0x36fef3;try{const _0x4b419f=_0x5ab9eb['split'](/\r?\n/);let _0x1a73c4=![],_0x5080aa=null;const _0x31f7a4=[];for(let _0x4960b1=0x0;_0x4960b1<_0x4b419f[_0x584eb9(0x1d1)];_0x4960b1++){const _0x481ec3=_0x4b419f[_0x4960b1][_0x584eb9(0x14c)]();if(_0x481ec3===_0x584eb9(0x13a)){_0x1a73c4=!![];continue;}if(!_0x1a73c4)continue;if(_0x481ec3[_0x584eb9(0x18a)](_0x584eb9(0x1c7)))_0x5080aa&&_0x31f7a4[_0x584eb9(0x184)](_0x5080aa),_0x5080aa={'name':_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x1c7),'')[_0x584eb9(0x14c)]()[_0x584eb9(0x124)](/"/g,''),'type':'','server':'','port':0x0};else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)]('type:'))_0x5080aa[_0x584eb9(0x1df)]=_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x150),'')[_0x584eb9(0x14c)]();else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)]('server:'))_0x5080aa[_0x584eb9(0x182)]=_0x481ec3['replace'](_0x584eb9(0x10f),'')['trim']();else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)](_0x584eb9(0x160)))_0x5080aa['port']=Number[_0x584eb9(0x194)](_0x481ec3[_0x584eb9(0x124)]('port:','')[_0x584eb9(0x14c)]());else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)](_0x584eb9(0x1de)))_0x5080aa[_0x584eb9(0x104)]=_0x481ec3['replace'](_0x584eb9(0x1de),'')[_0x584eb9(0x14c)]();else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)](_0x584eb9(0x1c1)))_0x5080aa['password']=_0x481ec3['replace'](_0x584eb9(0x1c1),'')[_0x584eb9(0x14c)]();else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)]('cipher:'))_0x5080aa[_0x584eb9(0x1cd)]=_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x11f),'')[_0x584eb9(0x14c)]();else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)](_0x584eb9(0x148)))_0x5080aa['alterId']=Number['parseInt'](_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x148),'')[_0x584eb9(0x14c)]());else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)]('tls:'))_0x5080aa[_0x584eb9(0x149)]=_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x159),'')['trim']()==='true';else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)](_0x584eb9(0x18b)))_0x5080aa[_0x584eb9(0x16c)]=_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x18b),'')[_0x584eb9(0x14c)]();else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)]('servername:'))_0x5080aa['sni']=_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x12f),'')[_0x584eb9(0x14c)]();else{if(_0x5080aa&&_0x481ec3[_0x584eb9(0x18a)]('sni:'))_0x5080aa[_0x584eb9(0x135)]=_0x481ec3[_0x584eb9(0x124)](_0x584eb9(0x126),'')[_0x584eb9(0x14c)]();else _0x5080aa&&_0x481ec3['startsWith'](_0x584eb9(0x1a4))&&(_0x4960b1+0x1<_0x4b419f[_0x584eb9(0x1d1)]&&_0x4b419f[_0x4960b1+0x1]['includes'](_0x584eb9(0x19b))&&(_0x5080aa['wsPath']=_0x4b419f[_0x4960b1+0x1][_0x584eb9(0x124)]('path:','')[_0x584eb9(0x14c)]()),_0x4960b1+0x2<_0x4b419f[_0x584eb9(0x1d1)]&&_0x4b419f[_0x4960b1+0x2][_0x584eb9(0x165)]('headers:')&&_0x4960b1+0x3<_0x4b419f[_0x584eb9(0x1d1)]&&_0x4b419f[_0x4960b1+0x3][_0x584eb9(0x165)](_0x584eb9(0x17e))&&(_0x5080aa[_0x584eb9(0x146)]=_0x4b419f[_0x4960b1+0x3][_0x584eb9(0x124)]('Host:','')[_0x584eb9(0x14c)]()));}}}}}}}}}}}(_0x481ec3[_0x584eb9(0x18a)](_0x584eb9(0x11e))||_0x481ec3[_0x584eb9(0x18a)]('rules:'))&&(_0x1a73c4=![],_0x5080aa&&(_0x31f7a4[_0x584eb9(0x184)](_0x5080aa),_0x5080aa=null));}return _0x1a73c4&&_0x5080aa&&_0x31f7a4[_0x584eb9(0x184)](_0x5080aa),_0x56a321(_0x31f7a4);}catch(_0x37e67a){throw new Error(_0x584eb9(0x137)+_0x37e67a[_0x584eb9(0x119)]);}}function _0x56a321(_0x1541c0){const _0x4b5721=_0x36fef3;if(!_0x1541c0||_0x1541c0[_0x4b5721(0x1d1)]===0x0)throw new Error('No\x20valid\x20proxies\x20found\x20in\x20the\x20configuration');return _0x1541c0[_0x4b5721(0x140)](_0x26629f=>{const _0x20635d=_0x4b5721;if(_0x26629f[_0x20635d(0x1df)]===_0x20635d(0x1ee))return _0x75c687(_0x26629f);else{if(_0x26629f[_0x20635d(0x1df)]===_0x20635d(0x110))return _0x1f0048(_0x26629f);else{if(_0x26629f[_0x20635d(0x1df)]===_0x20635d(0x1d8))return _0x2616e3(_0x26629f);else return _0x26629f[_0x20635d(0x1df)]==='ss'||_0x26629f[_0x20635d(0x1df)]===_0x20635d(0x186)?_0x32e35d(_0x26629f):_0x20635d(0x141)+_0x26629f[_0x20635d(0x1df)];}}})[_0x4b5721(0x1d6)]('\x0a');}function _0x75c687(_0x37177b){const _0x33ab07=_0x36fef3,_0x27ac1a={'v':'2','ps':_0x37177b[_0x33ab07(0x11d)],'add':_0x37177b[_0x33ab07(0x182)],'port':_0x37177b[_0x33ab07(0x12b)],'id':_0x37177b['uuid'],'aid':_0x37177b['alterId']||0x0,'net':_0x37177b[_0x33ab07(0x16c)]||_0x33ab07(0x13e),'type':_0x33ab07(0x193),'host':_0x37177b[_0x33ab07(0x146)]||'','path':_0x37177b[_0x33ab07(0x1e5)]||'','tls':_0x37177b[_0x33ab07(0x149)]?_0x33ab07(0x149):'','sni':_0x37177b[_0x33ab07(0x135)]||'','scy':_0x37177b[_0x33ab07(0x1cd)]||_0x33ab07(0x16a)},_0x119d52=btoa(JSON[_0x33ab07(0x152)](_0x27ac1a));return _0x33ab07(0x1ba)+_0x119d52;}function _0x1f0048(_0x23e6c8){const _0x3324b5=_0x36fef3;let _0x5015eb='vless://'+_0x23e6c8['uuid']+'@'+_0x23e6c8[_0x3324b5(0x182)]+':'+_0x23e6c8[_0x3324b5(0x12b)]+'?';const _0x3d9901=[];_0x3d9901[_0x3324b5(0x184)]('encryption=none'),_0x3d9901[_0x3324b5(0x184)](_0x3324b5(0x17b)+(_0x23e6c8[_0x3324b5(0x149)]?'tls':_0x3324b5(0x193))),_0x3d9901[_0x3324b5(0x184)]('type='+(_0x23e6c8[_0x3324b5(0x16c)]||_0x3324b5(0x13e)));if(_0x23e6c8['network']==='ws'){if(_0x23e6c8['wsPath'])_0x3d9901['push'](_0x3324b5(0x1ce)+encodeURIComponent(_0x23e6c8['wsPath']));if(_0x23e6c8[_0x3324b5(0x146)])_0x3d9901[_0x3324b5(0x184)](_0x3324b5(0x132)+encodeURIComponent(_0x23e6c8[_0x3324b5(0x146)]));}return _0x23e6c8[_0x3324b5(0x149)]&&_0x23e6c8[_0x3324b5(0x135)]&&_0x3d9901['push'](_0x3324b5(0x130)+encodeURIComponent(_0x23e6c8['sni'])),_0x5015eb+=_0x3d9901['join']('&'),_0x5015eb+='#'+encodeURIComponent(_0x23e6c8[_0x3324b5(0x11d)]),_0x5015eb;}function _0x2616e3(_0x53b05b){const _0x556abe=_0x36fef3;let _0x150dc7='trojan://'+_0x53b05b[_0x556abe(0x162)]+'@'+_0x53b05b[_0x556abe(0x182)]+':'+_0x53b05b['port']+'?';const _0x45087a=[];_0x45087a[_0x556abe(0x184)](_0x556abe(0x17b)+(_0x53b05b[_0x556abe(0x149)]?_0x556abe(0x149):_0x556abe(0x193)));if(_0x53b05b[_0x556abe(0x16c)]==='ws'){_0x45087a[_0x556abe(0x184)](_0x556abe(0x1f2));if(_0x53b05b[_0x556abe(0x1e5)])_0x45087a[_0x556abe(0x184)](_0x556abe(0x1ce)+encodeURIComponent(_0x53b05b[_0x556abe(0x1e5)]));if(_0x53b05b[_0x556abe(0x146)])_0x45087a[_0x556abe(0x184)](_0x556abe(0x132)+encodeURIComponent(_0x53b05b[_0x556abe(0x146)]));}return _0x53b05b[_0x556abe(0x135)]&&_0x45087a[_0x556abe(0x184)](_0x556abe(0x130)+encodeURIComponent(_0x53b05b['sni'])),_0x150dc7+=_0x45087a[_0x556abe(0x1d6)]('&'),_0x150dc7+='#'+encodeURIComponent(_0x53b05b['name']),_0x150dc7;}function _0x32e35d(_0xd51d74){const _0x5b92de=_0x36fef3,_0x357f61=_0xd51d74[_0x5b92de(0x1cd)]+':'+_0xd51d74[_0x5b92de(0x162)],_0x4eda01=btoa(_0x357f61);return _0x5b92de(0x1bd)+_0x4eda01+'@'+_0xd51d74[_0x5b92de(0x182)]+':'+_0xd51d74[_0x5b92de(0x12b)]+'#'+encodeURIComponent(_0xd51d74['name']);}function _0x4cca50(_0x1dd07c){const _0x4feb9d=_0x36fef3;_0x2a5762&&(_0x2a5762[_0x4feb9d(0x153)][_0x4feb9d(0x15b)]=_0x1dd07c?_0x4feb9d(0x12c):_0x4feb9d(0x193));}_0x4cca50(!![]);}),document[_0x12bdfe(0x1be)](_0x12bdfe(0x1ac),()=>{const _0x244e55=_0x12bdfe,_0x53766f=document[_0x244e55(0x177)]('#current-year'),_0x275ac4=new Date()['getFullYear']();_0x53766f['forEach'](_0x3c78d8=>{const _0x1c5b91=_0x244e55;_0x3c78d8[_0x1c5b91(0x185)]=_0x275ac4;});}),document['addEventListener'](_0x12bdfe(0x1ac),()=>{const _0x48839c=_0x12bdfe,_0x35c63e=document[_0x48839c(0x1bf)]('donation-button'),_0x20c067=document['getElementById']('donation-modal'),_0x4efc17=document[_0x48839c(0x1bf)](_0x48839c(0x195)),_0x321e76=document['getElementById'](_0x48839c(0x13d));_0x35c63e&&_0x20c067&&(_0x35c63e[_0x48839c(0x1be)](_0x48839c(0x1e9),()=>{const _0x1771ef=_0x48839c;_0x20c067[_0x1771ef(0xff)][_0x1771ef(0x11a)](_0x1771ef(0x1e2));}),_0x4efc17&&_0x4efc17[_0x48839c(0x1be)]('click',()=>{const _0x494344=_0x48839c;_0x20c067[_0x494344(0xff)]['remove'](_0x494344(0x1e2));}),_0x321e76&&_0x321e76[_0x48839c(0x1be)](_0x48839c(0x1e9),()=>{const _0x32abda=_0x48839c;_0x20c067[_0x32abda(0xff)][_0x32abda(0x14a)](_0x32abda(0x1e2));}),document['addEventListener'](_0x48839c(0x1cc),_0x560800=>{const _0x22d7ad=_0x48839c;_0x560800[_0x22d7ad(0x1ae)]==='Escape'&&_0x20c067[_0x22d7ad(0xff)][_0x22d7ad(0x123)](_0x22d7ad(0x1e2))&&_0x20c067[_0x22d7ad(0xff)][_0x22d7ad(0x14a)](_0x22d7ad(0x1e2));}));}));function generateUUIDv4(){const _0x3f674d=_0x12bdfe;return _0x3f674d(0x1bb)['replace'](/[xy]/g,_0x376cd2=>{const _0x15cf89=_0x3f674d,_0x6e4fdf=Math[_0x15cf89(0x1c8)]()*0x10|0x0,_0x53e871=_0x376cd2==='x'?_0x6e4fdf:_0x6e4fdf&0x3|0x8;return _0x53e871[_0x15cf89(0x174)](0x10);});}function safeBase64Encode(_0x28a685){const _0x1af5e5=_0x12bdfe;try{const _0x1fd426=typeof _0x28a685===_0x1af5e5(0x101)?JSON[_0x1af5e5(0x152)](_0x28a685):String(_0x28a685);return window[_0x1af5e5(0x1b9)](_0x1fd426);}catch(_0x43d2fb){return console[_0x1af5e5(0x1d0)](_0x1af5e5(0x136),_0x43d2fb),'';}}function _0x3249(){const _0x592d21=['<i\x20class=\x22fas\x20fa-exclamation-circle\x22></i>','copy-v2ray','innerHTML','removeChild','SS\x20Server','value','message','add','\x20\x20\x20\x20network:\x20ws\x0a\x20\x20\x20\x20ws-opts:\x0a\x20\x20\x20\x20\x20\x20path:\x20','info','name','proxy-groups:','cipher:','\x20\x20\x20\x20\x20\x20headers:\x0a\x20\x20\x20\x20\x20\x20\x20\x20Host:\x20','Trojan\x20Server','109108pjGQJv','contains','replace','hidden','sni:','show','\x0arules:\x0a','Failed\x20to\x20copy\x20text:\x20','minimal-config','port','block','2821000fsXGbb','\x20\x20\x20\x20\x20\x20-\x20LOAD-BALANCE\x0a','servername:','sni=','18UQwbey','host=','<i\x20class=\x22fas\x20fa-check\x22></i>\x20Copied!','\x0a\x20\x20\x20\x20alterId:\x20','sni','Base64\x20encoding\x20error:','Failed\x20to\x20parse\x20Clash\x20configuration:\x20','alterId','v2ray-input','proxies:','top','aes-128-gcm','donation-backdrop','tcp','File\x20\x22','map','#\x20Unsupported\x20proxy\x20type:\x20','backgroundColor','\x22\x0a\x20\x20\x20\x20type:\x20vmess\x0a\x20\x20\x20\x20server:\x20','#\x20Clash\x20Configuration\x0a#\x20Generated\x20by\x20Inconigto-Mode\x20Converter\x0a#\x20Date:\x20','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22color:\x20white;\x22>','wsHost','text/yaml','alterId:','tls','remove','toISOString','trim','441320aqoOnt','<i\x20class=\x22fas\x20fa-info-circle\x22></i>','error-message','type:','-999999px','stringify','style','\x0aproxies:\x0a','trojan://','clash','fadeIn\x200.3s,\x20fadeOut\x200.3s\x20','Please\x20enter\x20configuration\x20to\x20convert','tls:','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20@keyframes\x20fadeIn\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20from\x20{\x20opacity:\x200;\x20transform:\x20translateY(20px);\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20to\x20{\x20opacity:\x201;\x20transform:\x20translateY(0);\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20@keyframes\x20fadeOut\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20from\x20{\x20opacity:\x201;\x20transform:\x20translateY(0);\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20to\x20{\x20opacity:\x200;\x20transform:\x20translateY(-20px);\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20','display','aid','2-digit','config-to-v2ray-section','v2ray-to-config-section','port:','250px','password','center','Please\x20enter\x20V2Ray\x20links\x20to\x20convert','includes','config-to-v2ray','body','VMess\x20Server','alignItems','auto','\x20\x20\x20\x20\x20\x20-\x20FALLBACK\x0a','network','8px','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<button\x20style=\x22background:\x20none;\x20border:\x20none;\x20color:\x20white;\x20cursor:\x20pointer;\x20font-size:\x2016px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-times\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20','querySelector','Error\x20parsing\x20link:','.yaml','s\x20forwards','\x22\x20downloaded\x20successfully!','toString','substring','skipCertVerify','querySelectorAll','config-output','toast-message','\x0a\x20\x20\x20\x20password:\x20','security=','<i\x20class=\x22far\x20fa-copy\x22></i>\x20Copy','convert-config','Host:','numeric','copy','\x0a\x20\x20\x20\x20port:\x20','server','convert-v2ray','push','textContent','shadowsocks','select','net','writeText','startsWith','network:','opacity','execCommand','href','\x22\x0a\x20\x20\x20\x20type:\x20trojan\x0a\x20\x20\x20\x20server:\x20','111011FGaOmZ','appendChild','1859795NJboOF','none','parseInt','close-donation','\x20\x20-\x20RULE-SET,⛔\x20ADS,ADS\x0a','port:\x207890\x0asocks-port:\x207891\x0aallow-lan:\x20true\x0amode:\x20rule\x0alog-level:\x20info\x0aexternal-controller:\x20127.0.0.1:9090\x0adns:\x0a\x20\x20enable:\x20true\x0a\x20\x20listen:\x200.0.0.0:53\x0a\x20\x20','toggle','filter','<i\x20class=\x22fas\x20fa-check-circle\x22></i>','path:','Failed\x20to\x20parse\x20link:\x20','forEach','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:\x20flex;\x20align-items:\x20center;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22margin-right:\x2010px;\x20font-size:\x2018px;\x22>','textarea','minWidth','button','animation','\x20\x20-\x20RULE-SET,🔞\x20Porn,PORN\x0a','ws-opts:','\x0a\x20\x20⛔\x20ADS:\x0a\x20\x20\x20\x20type:\x20http\x0a\x20\x20\x20\x20behavior:\x20domain\x0a\x20\x20\x20\x20url:\x20\x22https://raw.githubusercontent.com/malikshi/open_clash/refs/heads/main/rule_provider/rule_basicads.yaml\x22\x0a\x20\x20\x20\x20path:\x20\x22./rule_provider/rule_basicads.yaml\x22\x0a\x20\x20\x20\x20interval:\x2086400\x0a','\x0a\x20\x20-\x20name:\x20\x22BEST-PING\x22\x0a\x20\x20\x20\x20type:\x20url-test\x0a\x20\x20\x20\x20url:\x20http://www.gstatic.com/generate_204\x0a\x20\x20\x20\x20interval:\x20300\x0a\x20\x20\x20\x20tolerance:\x2050\x0a\x20\x20\x20\x20proxies:\x0a','parse','toast-styles','8428158aazkpX','security','9999','DOMContentLoaded','createObjectURL','key','\x20\x20-\x20name:\x20\x22SELECTOR\x22\x0a\x20\x20\x20\x20type:\x20select\x0a\x20\x20\x20\x20proxies:\x0a\x20\x20\x20\x20\x20\x20-\x20DIRECT\x0a\x20\x20\x20\x20\x20\x20-\x20REJECT\x0a','\x0a\x20\x20\x20\x20skip-cert-verify:\x20','lastIndexOf','\x20\x20-\x20name:\x20\x22','porn-block','\x0a\x20\x20\x20\x20udp:\x20true\x0a','toast\x20toast-','2GQKdZE','v2ray-output','0\x204px\x2012px\x20rgba(0,\x200,\x200,\x200.15)','btoa','vmess://','xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx','fixed','ss://','addEventListener','getElementById','left','password:','834372YWmUqh','best-ping','createElement','flex','\x0a\x20\x20\x20\x20udp:\x20true\x0a\x20\x20\x20\x20tls:\x20','-\x20name:','random','vless://','div','save-proxy-provider','keydown','cipher','path=','revokeObjectURL','error','length','load-balance','toLocaleDateString','\x0a\x20\x20nameserver:\x0a\x20\x20\x20\x20-\x208.8.8.8\x0a\x20\x20\x20\x20-\x201.1.1.1\x0a\x20\x20\x20\x20-\x20https://dns.cloudflare.com/dns-query\x0a\x20\x20fallback:\x0a\x20\x20\x20\x20-\x201.0.0.1\x0a\x20\x20\x20\x20-\x208.8.4.4\x0a\x20\x20\x20\x20-\x20https://dns.google/dns-query\x0a\x0a','redir-host','join','No\x20content\x20to\x20download.\x20Please\x20convert\x20first.','trojan','right','path','\x0a\x20\x20\x20\x20uuid:\x20','\x20\x20-\x20IP-CIDR,192.168.0.0/16,DIRECT\x0a\x20\x20-\x20IP-CIDR,10.0.0.0/8,DIRECT\x0a\x20\x20-\x20IP-CIDR,172.16.0.0/12,DIRECT\x0a\x20\x20-\x20IP-CIDR,127.0.0.0/8,DIRECT\x0a\x20\x20-\x20MATCH,INCONIGTO-MODE\x0a','boxShadow','uuid:','type','clash-options','\x0a\x20\x20🔞\x20Porn:\x0a\x20\x20\x20\x20type:\x20http\x0a\x20\x20\x20\x20behavior:\x20domain\x0a\x20\x20\x20\x20url:\x20\x22https://raw.githubusercontent.com/malikshi/open_clash/refs/heads/main/rule_provider/rule_porn.yaml\x22\x0a\x20\x20\x20\x20path:\x20\x22./rule_provider/rule_porn.yaml\x22\x0a\x20\x20\x20\x20interval:\x2086400\x0a','active','\x0a\x20\x20\x20\x20cipher:\x20','zIndex','wsPath','\x20\x20\x20\x20servername:\x20','justifyContent','fallback','click','toast-notification','success','en-US','loading-indicator','vmess','\x20\x20\x20\x20\x20\x20-\x20','Invalid\x20Trojan\x20link\x20format','position','type=ws','rgba(99,\x20102,\x20241,\x200.9)','classList','host','object','bottom','split','uuid','Failed\x20to\x20copy:\x20','full-config-reverse','\x20\x20\x20\x20\x20\x20-\x20BEST-PING\x0a','<i\x20class=\x22fas\x20fa-check-circle\x22></i>\x20<span\x20id=\x22toast-message\x22></span>','enhanced-mode:\x20redir-host','20px','\x0a\x20\x20-\x20name:\x20\x22FALLBACK\x22\x0a\x20\x20\x20\x20type:\x20fallback\x0a\x20\x20\x20\x20url:\x20http://www.gstatic.com/generate_204\x0a\x20\x20\x20\x20interval:\x20300\x0a\x20\x20\x20\x20proxies:\x0a','className','\x22\x0a\x20\x20\x20\x20type:\x20vless\x0a\x20\x20\x20\x20server:\x20','all-groups','server:','vless','v2ray_links_','full-config'];_0x3249=function(){return _0x592d21;};return _0x3249();}function formatDate(_0x232b5b){const _0x4887c6=_0x12bdfe,_0x518f3b={'year':_0x4887c6(0x17f),'month':'short','day':_0x4887c6(0x17f),'hour':_0x4887c6(0x15d),'minute':'2-digit'};return _0x232b5b[_0x4887c6(0x1d3)](_0x4887c6(0x1ec),_0x518f3b);}async function copyToClipboard(_0x4a6dcb){const _0x44dee3=_0x12bdfe;try{if(navigator['clipboard']&&navigator['clipboard'][_0x44dee3(0x189)])return await navigator['clipboard'][_0x44dee3(0x189)](_0x4a6dcb),!![];else{const _0x4dee11=document[_0x44dee3(0x1c4)](_0x44dee3(0x19f));_0x4dee11['value']=_0x4a6dcb,_0x4dee11['style'][_0x44dee3(0x1f1)]='fixed',_0x4dee11['style'][_0x44dee3(0x1c0)]=_0x44dee3(0x151),_0x4dee11[_0x44dee3(0x153)][_0x44dee3(0x13b)]='-999999px',document[_0x44dee3(0x167)][_0x44dee3(0x191)](_0x4dee11),_0x4dee11['focus'](),_0x4dee11['select']();const _0x3690b8=document[_0x44dee3(0x18d)](_0x44dee3(0x180));return document['body']['removeChild'](_0x4dee11),_0x3690b8;}}catch(_0x1d7956){return console[_0x44dee3(0x1d0)](_0x44dee3(0x129),_0x1d7956),![];}}function showToast(_0x4701c0,_0x464502=_0x12bdfe(0x11c),_0x5ddc27=0xbb8){const _0x550859=_0x12bdfe;let _0x17aa0b=document[_0x550859(0x1bf)]('toast-container');!_0x17aa0b&&(_0x17aa0b=document['createElement'](_0x550859(0x1ca)),_0x17aa0b['id']='toast-container',_0x17aa0b['style']['position']=_0x550859(0x1bc),_0x17aa0b[_0x550859(0x153)][_0x550859(0x102)]='20px',_0x17aa0b[_0x550859(0x153)][_0x550859(0x1d9)]=_0x550859(0x10a),_0x17aa0b[_0x550859(0x153)][_0x550859(0x1e4)]=_0x550859(0x1ab),document[_0x550859(0x167)][_0x550859(0x191)](_0x17aa0b));const _0x5ae741=document[_0x550859(0x1c4)](_0x550859(0x1ca));_0x5ae741[_0x550859(0x10c)]=_0x550859(0x1b5)+_0x464502,_0x5ae741[_0x550859(0x153)][_0x550859(0x1a0)]=_0x550859(0x161),_0x5ae741['style']['margin']='10px\x200',_0x5ae741['style']['padding']='15px',_0x5ae741[_0x550859(0x153)]['borderRadius']=_0x550859(0x16d),_0x5ae741['style'][_0x550859(0x1dd)]=_0x550859(0x1b8),_0x5ae741[_0x550859(0x153)]['display']='flex',_0x5ae741[_0x550859(0x153)][_0x550859(0x169)]=_0x550859(0x163),_0x5ae741[_0x550859(0x153)][_0x550859(0x1e7)]='space-between',_0x5ae741['style'][_0x550859(0x1a2)]=_0x550859(0x157)+(_0x5ddc27/0x3e8-0.3)+_0x550859(0x172);switch(_0x464502){case _0x550859(0x1eb):_0x5ae741['style'][_0x550859(0x142)]='rgba(16,\x20185,\x20129,\x200.9)';break;case'error':_0x5ae741[_0x550859(0x153)][_0x550859(0x142)]='rgba(239,\x2068,\x2068,\x200.9)';break;default:_0x5ae741[_0x550859(0x153)][_0x550859(0x142)]=_0x550859(0x1f3);}let _0x20f494='';switch(_0x464502){case'success':_0x20f494=_0x550859(0x19a);break;case _0x550859(0x1d0):_0x20f494=_0x550859(0x113);break;default:_0x20f494=_0x550859(0x14e);}_0x5ae741[_0x550859(0x115)]=_0x550859(0x19e)+_0x20f494+_0x550859(0x145)+_0x4701c0+_0x550859(0x16e);const _0x256866=_0x5ae741[_0x550859(0x16f)](_0x550859(0x1a1));_0x256866['addEventListener'](_0x550859(0x1e9),()=>{const _0x2b8fd6=_0x550859;_0x17aa0b[_0x2b8fd6(0x116)](_0x5ae741);}),_0x17aa0b[_0x550859(0x191)](_0x5ae741);if(!document[_0x550859(0x1bf)](_0x550859(0x1a8))){const _0x4cb4b3=document['createElement']('style');_0x4cb4b3['id']=_0x550859(0x1a8),_0x4cb4b3[_0x550859(0x185)]=_0x550859(0x15a),document['head'][_0x550859(0x191)](_0x4cb4b3);}setTimeout(()=>{const _0x1f0a85=_0x550859;_0x17aa0b['contains'](_0x5ae741)&&_0x17aa0b[_0x1f0a85(0x116)](_0x5ae741);},_0x5ddc27);}function generateUUID(_0x1834a0){const _0x3782da=_0x12bdfe;document['getElementById'](_0x1834a0)[_0x3782da(0x118)]=generateUUIDv4();}function _0x5a9e(_0x51396b,_0xeef5c5){const _0x324991=_0x3249();return _0x5a9e=function(_0x5a9ec4,_0x7dbda5){_0x5a9ec4=_0x5a9ec4-0xff;let _0x1b1936=_0x324991[_0x5a9ec4];return _0x1b1936;},_0x5a9e(_0x51396b,_0xeef5c5);}function generatePassword(_0x4a7d7c){const _0x223a1e=_0x12bdfe;document['getElementById'](_0x4a7d7c)[_0x223a1e(0x118)]=generateUUIDv4();}
+</script>
 </html>
